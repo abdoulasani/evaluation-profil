@@ -78,13 +78,16 @@
             padding: 40px 30px;
         }
 
-        .section {
+        .form-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #e9ecef;
             display: none;
-            animation: fadeIn 0.5s ease;
         }
 
-        .section.active {
+        .form-section.active {
             display: block;
+            animation: fadeIn 0.5s ease;
         }
 
         @keyframes fadeIn {
@@ -99,9 +102,9 @@
         }
 
         .section-title {
-            font-size: 1.8em;
+            font-size: 1.6em;
             color: #0f3460;
-            margin-bottom: 10px;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -109,19 +112,75 @@
 
         .section-subtitle {
             color: #666;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             line-height: 1.6;
             font-size: 0.95em;
         }
 
-        .welcome-message {
-            background: #f0f7ff;
-            border-left: 4px solid #1a5490;
-            padding: 20px;
-            border-radius: 8px;
+        .program-selector {
             margin-bottom: 30px;
-            line-height: 1.8;
-            color: #333;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .card:hover {
+            border-color: #1a5490;
+            box-shadow: 0 10px 30px rgba(26, 84, 144, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .card.selected {
+            background: linear-gradient(135deg, #0f3460 0%, #1a5490 100%);
+            color: white;
+            border-color: #0f3460;
+        }
+
+        .card-icon {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-weight: 700;
+            font-size: 0.95em;
+            line-height: 1.3;
+        }
+
+        .card-checkbox {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #0f3460;
+            background: white;
+        }
+
+        .card.selected .card-checkbox {
+            display: flex;
         }
 
         .form-group {
@@ -145,6 +204,7 @@
         .form-group input[type="email"],
         .form-group input[type="tel"],
         .form-group input[type="date"],
+        .form-group input[type="number"],
         .form-group select,
         .form-group textarea {
             width: 100%;
@@ -166,7 +226,7 @@
 
         .form-group textarea {
             resize: vertical;
-            min-height: 100px;
+            min-height: 80px;
         }
 
         .radio-group,
@@ -200,6 +260,7 @@
             width: 18px;
             height: 18px;
             accent-color: #1a5490;
+            flex-shrink: 0;
         }
 
         .radio-item label,
@@ -210,150 +271,117 @@
             flex-grow: 1;
         }
 
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+        .conditional-group {
+            margin-left: 40px;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9ff;
+            border-left: 4px solid #1a5490;
+            border-radius: 6px;
+            display: none;
         }
 
-        .card {
-            background: white;
-            border: 2px solid #e9ecef;
+        .conditional-group.visible {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 500px;
+            }
+        }
+
+        .profile-summary {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e8f3ff 100%);
+            border: 2px solid #1a5490;
             border-radius: 12px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card:hover {
-            border-color: #1a5490;
-            box-shadow: 0 10px 30px rgba(26, 84, 144, 0.15);
-            transform: translateY(-5px);
-        }
-
-        .card.selected {
-            background: linear-gradient(135deg, #0f3460 0%, #1a5490 100%);
-            color: white;
-            border-color: #0f3460;
-        }
-
-        .card-icon {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .card-title {
-            font-weight: 700;
-            margin-bottom: 8px;
-            font-size: 1.1em;
-        }
-
-        .card-description {
-            font-size: 0.9em;
-            opacity: 0.8;
-            line-height: 1.4;
-        }
-
-        .card.selected .card-description {
-            opacity: 0.95;
-        }
-
-        .card-checkbox {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 24px;
-            height: 24px;
-            border: 2px solid #ddd;
-            border-radius: 4px;
-            display: none;
-        }
-
-        .card.selected .card-checkbox {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            border-color: white;
-            font-size: 16px;
-            color: #0f3460;
-        }
-
-        .file-upload {
-            border: 2px dashed #1a5490;
-            border-radius: 8px;
             padding: 30px;
-            text-align: center;
-            background: #f0f7ff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 15px;
-        }
-
-        .file-upload:hover {
-            background: #e8f3ff;
-            border-color: #0f3460;
-        }
-
-        .file-upload input {
+            margin-bottom: 30px;
             display: none;
         }
 
-        .file-upload-icon {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+        .profile-summary.visible {
+            display: block;
+            animation: fadeIn 0.5s ease;
         }
 
-        .file-upload-text {
+        .summary-title {
+            font-size: 1.5em;
             color: #0f3460;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .summary-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #1a5490;
+        }
+
+        .summary-label {
+            font-size: 0.85em;
+            color: #666;
             font-weight: 600;
             margin-bottom: 5px;
         }
 
-        .file-upload-hint {
-            color: #666;
-            font-size: 0.9em;
+        .summary-value {
+            font-size: 1.1em;
+            color: #0f3460;
+            font-weight: 700;
         }
 
-        .file-list {
-            list-style: none;
+        .readiness-badge {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 700;
             margin-top: 15px;
         }
 
-        .file-item {
-            background: #f8f9fa;
-            padding: 10px 15px;
-            border-radius: 6px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.9em;
+        .readiness-excellent {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #28a745;
         }
 
-        .file-item-remove {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 4px 8px;
-            cursor: pointer;
-            font-size: 0.8em;
-            transition: background 0.3s ease;
+        .readiness-good {
+            background: #cfe2ff;
+            color: #084298;
+            border: 2px solid #0d6efd;
         }
 
-        .file-item-remove:hover {
-            background: #c0392b;
+        .readiness-medium {
+            background: #fff3cd;
+            color: #664d03;
+            border: 2px solid #ffc107;
+        }
+
+        .readiness-insufficient {
+            background: #f8d7da;
+            color: #842029;
+            border: 2px solid #dc3545;
         }
 
         .buttons {
             display: flex;
             gap: 15px;
             justify-content: space-between;
-            margin-top: 40px;
+            margin-top: 30px;
             padding-top: 30px;
             border-top: 2px solid #e9ecef;
         }
@@ -420,17 +448,6 @@
             font-size: 0.95em;
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         .error-message {
             background: #f8d7da;
             border: 2px solid #f5c6cb;
@@ -446,10 +463,19 @@
             display: block;
         }
 
-        .divider {
-            height: 1px;
-            background: #e9ecef;
-            margin: 30px 0;
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hidden {
+            display: none !important;
         }
 
         @media (max-width: 768px) {
@@ -474,7 +500,7 @@
             }
 
             .section-title {
-                font-size: 1.4em;
+                font-size: 1.3em;
             }
 
             .content {
@@ -483,6 +509,14 @@
 
             .header {
                 padding: 30px 20px;
+            }
+
+            .conditional-group {
+                margin-left: 0;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -498,10 +532,11 @@
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
-            <div class="progress-text" id="progressText">Étape 1 sur 10</div>
+            <div class="progress-text" id="progressText">Sélectionnez un programme</div>
         </div>
 
         <div class="content">
+            <div id="errorMessage" class="error-message"></div>
             <div id="successMessage" class="success-message">
                 <h2>✓ Merci pour votre confiance</h2>
                 <p>Votre formulaire a été transmis avec succès à Horizon Atlas.</p>
@@ -509,149 +544,67 @@
             </div>
 
             <form id="assessmentForm">
-                <!-- SECTION 1: PROGRAMME SOUHAITÉ -->
-                <div class="section active" id="section1">
-                    <div class="section-title">📋 Section 1 : Programme Souhaité</div>
-                    <div class="welcome-message">
-                        <strong>Bienvenue chez Horizon Atlas</strong><br><br>
-                        Ce questionnaire nous permet d'évaluer votre profil, votre niveau de préparation et votre admissibilité à nos différents programmes de mobilité internationale.<br><br>
-                        Les informations fournies resteront strictement confidentielles et seront utilisées uniquement dans le cadre de l'étude de votre dossier.<br><br>
-                        Veuillez répondre avec précision afin que notre équipe puisse vous proposer la solution la plus adaptée à votre situation.
+                <!-- ÉTAPE 1: SÉLECTION DU PROGRAMME -->
+                <div class="form-section active" id="section-program">
+                    <div class="section-title">📋 Sélectionnez votre programme</div>
+                    <div class="section-subtitle">
+                        Bienvenue chez Horizon Atlas. Ce questionnaire nous permet d'évaluer votre profil et votre admissibilité.<br>
+                        Veuillez sélectionner le programme qui correspond à votre projet.
                     </div>
 
-                    <div class="form-group required">
-                        <label>Quel programme souhaitez-vous explorer ?</label>
+                    <div class="program-selector">
                         <div class="card-grid" id="programCards">
                             <div class="card" data-program="visa-etudes-espagne">
                                 <div class="card-checkbox">✓</div>
                                 <div class="card-icon">🎓</div>
                                 <div class="card-title">Visa Études Espagne</div>
-                                <div class="card-description">Étudier, vivre et travailler légalement en Espagne pendant vos études. Cours de langue espagnole.</div>
                             </div>
                             <div class="card" data-program="visa-travail-espagne">
                                 <div class="card-checkbox">✓</div>
                                 <div class="card-icon">💼</div>
                                 <div class="card-title">Visa Travail Espagne</div>
-                                <div class="card-description">Opportunités professionnelles et installation en Espagne.</div>
                             </div>
                             <div class="card" data-program="visa-visiteur-canada">
                                 <div class="card-checkbox">✓</div>
                                 <div class="card-icon">✈️</div>
                                 <div class="card-title">Visa Visiteur Canada</div>
-                                <div class="card-description">Voyage touristique, visite familiale ou voyage d'affaires.</div>
                             </div>
                             <div class="card" data-program="visa-travail-koweit">
                                 <div class="card-checkbox">✓</div>
                                 <div class="card-icon">🏢</div>
                                 <div class="card-title">Visa Travail Koweït</div>
-                                <div class="card-description">Opportunités d'emploi au Koweït.</div>
                             </div>
                             <div class="card" data-program="residence-dubai">
                                 <div class="card-checkbox">✓</div>
                                 <div class="card-icon">🏙️</div>
                                 <div class="card-title">Résidence Dubaï</div>
-                                <div class="card-description">Installation et résidence aux Émirats Arabes Unis.</div>
                             </div>
                         </div>
                         <input type="hidden" id="selectedProgram" name="program" required>
                     </div>
 
                     <div class="buttons">
-                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
+                        <button type="button" class="btn-primary" onclick="startAssessment()" id="startBtn" disabled>Démarrer l'Évaluation</button>
                     </div>
                 </div>
 
-                <!-- SECTION 2: ÉVALUATION FINANCIÈRE -->
-                <div class="section" id="section2">
-                    <div class="section-title">💰 Section 2 : Évaluation Financière</div>
-                    <div class="section-subtitle">
-                        Chaque programme nécessite une capacité financière minimale. Cette information nous permet de vérifier la faisabilité de votre projet et de vous orienter vers le programme correspondant à votre situation.
-                    </div>
-
-                    <div class="form-group required">
-                        <label>Quel budget pouvez-vous mobiliser actuellement pour votre projet ?</label>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="budget1" name="budget" value="moins-500k" required>
-                                <label for="budget1">Moins de 500 000 FCFA</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="budget2" name="budget" value="500k-1m">
-                                <label for="budget2">Entre 500 000 et 1 000 000 FCFA</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="budget3" name="budget" value="1m-2m">
-                                <label for="budget3">Entre 1 000 000 et 2 000 000 FCFA</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="budget4" name="budget" value="2m-5m">
-                                <label for="budget4">Entre 2 000 000 et 5 000 000 FCFA</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="budget5" name="budget" value="plus-5m">
-                                <label for="budget5">Plus de 5 000 000 FCFA</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group required">
-                        <label>Disposez-vous d'un garant financier ?</label>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="guarantor-yes" name="hasGuarantor" value="yes" required onchange="toggleSection6()">
-                                <label for="guarantor-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="guarantor-no" name="hasGuarantor" value="no" onchange="toggleSection6()">
-                                <label for="guarantor-no">Non</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="buttons">
-                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
-                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
-                    </div>
-                </div>
-
-                <!-- SECTION 3: INFORMATIONS PERSONNELLES -->
-                <div class="section" id="section3">
-                    <div class="section-title">👤 Section 3 : Informations Personnelles</div>
+                <!-- ÉTAPE 2: INFORMATIONS PERSONNELLES (Commune à tous) -->
+                <div class="form-section" id="section-personal">
+                    <div class="section-title">👤 Informations Personnelles</div>
 
                     <div class="form-group required">
                         <label for="fullName">Nom complet</label>
                         <input type="text" id="fullName" name="fullName" required>
                     </div>
 
+                    <div class="form-group required" data-program="visa-travail-espagne">
+                        <label for="age">Âge</label>
+                        <input type="number" id="age" name="age" min="18" max="120">
+                    </div>
+
                     <div class="form-group required">
                         <label for="birthDate">Date de naissance</label>
                         <input type="date" id="birthDate" name="birthDate" required>
-                    </div>
-
-                    <div class="form-group required">
-                        <label for="birthCity">Ville de naissance</label>
-                        <input type="text" id="birthCity" name="birthCity" required>
-                    </div>
-
-                    <div class="form-group required">
-                        <label for="birthCountry">Pays de naissance</label>
-                        <input type="text" id="birthCountry" name="birthCountry" required>
-                    </div>
-
-                    <div class="form-group required">
-                        <label for="nationality">Nationalité</label>
-                        <input type="text" id="nationality" name="nationality" required>
-                    </div>
-
-                    <div class="form-group required">
-                        <label for="maritalStatus">État matrimonial</label>
-                        <select id="maritalStatus" name="maritalStatus" required>
-                            <option value="">-- Sélectionner --</option>
-                            <option value="single">Célibataire</option>
-                            <option value="married">Marié(e)</option>
-                            <option value="divorced">Divorcé(e)</option>
-                            <option value="widowed">Veuf/Veuve</option>
-                        </select>
                     </div>
 
                     <div class="form-group required">
@@ -669,408 +622,681 @@
                         <input type="email" id="email" name="email" required>
                     </div>
 
-                    <div class="buttons">
-                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
-                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
-                    </div>
-                </div>
-
-                <!-- SECTION 4: DOCUMENTS PERSONNELS -->
-                <div class="section" id="section4">
-                    <div class="section-title">📄 Section 4 : Documents Personnels</div>
-                    <div class="section-subtitle">Possédez-vous actuellement :</div>
-
-                    <div class="form-group required">
-                        <label>Passeport valide ?</label>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="passport-yes" name="hasPassport" value="yes" required>
-                                <label for="passport-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="passport-no" name="hasPassport" value="no">
-                                <label for="passport-no">Non</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group required">
-                        <label>Acte de naissance ?</label>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="birthcert-yes" name="hasBirthCert" value="yes" required>
-                                <label for="birthcert-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="birthcert-no" name="hasBirthCert" value="no">
-                                <label for="birthcert-no">Non</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group required">
-                        <label>Certificat de résidence ?</label>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="residence-yes" name="hasResidenceCert" value="yes" required>
-                                <label for="residence-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="residence-no" name="hasResidenceCert" value="no">
-                                <label for="residence-no">Non</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group required">
-                        <label>Casier judiciaire ?</label>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="criminal-yes" name="hasCriminalRecord" value="yes" required>
-                                <label for="criminal-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="criminal-no" name="hasCriminalRecord" value="no">
-                                <label for="criminal-no">Non</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group required">
-                        <label>Certificat médical ?</label>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="medical-yes" name="hasMedicalCert" value="yes" required>
-                                <label for="medical-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="medical-no" name="hasMedicalCert" value="no">
-                                <label for="medical-no">Non</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group required">
-                        <label>Photos d'identité récentes ?</label>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="photos-yes" name="hasPhotos" value="yes" required>
-                                <label for="photos-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="photos-no" name="hasPhotos" value="no">
-                                <label for="photos-no">Non</label>
-                            </div>
-                        </div>
+                    <div class="form-group required" data-program="residence-dubai">
+                        <label for="countryResidence">Pays de résidence actuelle</label>
+                        <input type="text" id="countryResidence" name="countryResidence">
                     </div>
 
                     <div class="buttons">
-                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
-                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
+                        <button type="button" class="btn-secondary" onclick="backToProgram()">Retour</button>
+                        <button type="button" class="btn-primary" onclick="nextStep()">Continuer</button>
                     </div>
                 </div>
 
-                <!-- SECTION 5: ÉVALUATION POUR ESPAGNE -->
-                <div class="section" id="section5">
-                    <div class="section-title">🎓 Section 5 : Évaluation pour les Programmes Espagne</div>
-                    <div class="section-subtitle">Cette section n'apparaît que si vous avez choisi l'un des programmes Espagne.</div>
+                <!-- VISA ÉTUDES ESPAGNE -->
+                <div class="form-section" id="section-visa-etudes-espagne" data-program="visa-etudes-espagne">
+                    <div class="section-title">📚 Évaluation du Profil - Visa Études Espagne</div>
 
                     <div class="form-group required">
-                        <label>Possédez-vous un Baccalauréat ?</label>
+                        <label>Avez-vous un passeport valide ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="bac-yes" name="hasBachelor" value="yes" required>
-                                <label for="bac-yes">Oui</label>
+                                <input type="radio" id="ve-passport-yes" name="ve_passport" value="yes" required>
+                                <label for="ve-passport-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="bac-no" name="hasBachelor" value="no">
-                                <label for="bac-no">Non</label>
+                                <input type="radio" id="ve-passport-no" name="ve_passport" value="no">
+                                <label for="ve-passport-no">Non</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group required">
-                        <label>Relevés de notes du Baccalauréat ?</label>
+                        <label>Possédez-vous un acte de naissance ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="bacnotes-yes" name="hasBachelorNotes" value="yes" required>
-                                <label for="bacnotes-yes">Oui</label>
+                                <input type="radio" id="ve-birth-yes" name="ve_birthCert" value="yes" required>
+                                <label for="ve-birth-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="bacnotes-no" name="hasBachelorNotes" value="no">
-                                <label for="bacnotes-no">Non</label>
+                                <input type="radio" id="ve-birth-no" name="ve_birthCert" value="no">
+                                <label for="ve-birth-no">Non</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group required">
-                        <label>Bulletins scolaires récents ?</label>
+                        <label>Possédez-vous votre Baccalauréat ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="schoolrec-yes" name="hasSchoolRecords" value="yes" required>
-                                <label for="schoolrec-yes">Oui</label>
+                                <input type="radio" id="ve-bac-yes" name="ve_bachelor" value="yes" required>
+                                <label for="ve-bac-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="schoolrec-no" name="hasSchoolRecords" value="no">
-                                <label for="schoolrec-no">Non</label>
+                                <input type="radio" id="ve-bac-no" name="ve_bachelor" value="no">
+                                <label for="ve-bac-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Disposez-vous des relevés de notes du Baccalauréat ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="ve-bacnotes-yes" name="ve_bacNotes" value="yes" required>
+                                <label for="ve-bacnotes-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="ve-bacnotes-no" name="ve_bacNotes" value="no">
+                                <label for="ve-bacnotes-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Disposez-vous de vos bulletins scolaires récents ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="ve-schoolrecords-yes" name="ve_schoolRecords" value="yes" required>
+                                <label for="ve-schoolrecords-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="ve-schoolrecords-no" name="ve_schoolRecords" value="no">
+                                <label for="ve-schoolrecords-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Possédez-vous un certificat de résidence ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="ve-residence-yes" name="ve_residenceCert" value="yes" required>
+                                <label for="ve-residence-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="ve-residence-no" name="ve_residenceCert" value="no">
+                                <label for="ve-residence-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Pouvez-vous obtenir un casier judiciaire ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="ve-criminal-yes" name="ve_criminalRecord" value="yes" required>
+                                <label for="ve-criminal-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="ve-criminal-no" name="ve_criminalRecord" value="no">
+                                <label for="ve-criminal-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Pouvez-vous obtenir un certificat médical ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="ve-medical-yes" name="ve_medicalCert" value="yes" required>
+                                <label for="ve-medical-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="ve-medical-no" name="ve_medicalCert" value="no">
+                                <label for="ve-medical-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Disposez-vous d'un garant financier ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="ve-guarantor-yes" name="ve_hasGuarantor" value="yes" required onchange="toggleGuarantorSection('ve')">
+                                <label for="ve-guarantor-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="ve-guarantor-no" name="ve_hasGuarantor" value="no" onchange="toggleGuarantorSection('ve')">
+                                <label for="ve-guarantor-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="conditional-group" id="ve-guarantor-section">
+                        <div class="form-group">
+                            <label>Votre garant possède-t-il :</label>
+                        </div>
+
+                        <div class="form-group">
+                            <label>NIF ?</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="ve-nif-yes" name="ve_guarantorNif" value="yes">
+                                    <label for="ve-nif-yes">Oui</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="ve-nif-no" name="ve_guarantorNif" value="no">
+                                    <label for="ve-nif-no">Non</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>RCCM ?</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="ve-rccm-yes" name="ve_guarantorRccm" value="yes">
+                                    <label for="ve-rccm-yes">Oui</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="ve-rccm-no" name="ve_guarantorRccm" value="no">
+                                    <label for="ve-rccm-no">Non</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>ARF ?</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="ve-arf-yes" name="ve_guarantorArf" value="yes">
+                                    <label for="ve-arf-yes">Oui</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="ve-arf-no" name="ve_guarantorArf" value="no">
+                                    <label for="ve-arf-no">Non</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Relevé bancaire ?</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="ve-bank-yes" name="ve_guarantorBankStatement" value="yes">
+                                    <label for="ve-bank-yes">Oui</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="ve-bank-no" name="ve_guarantorBankStatement" value="no">
+                                    <label for="ve-bank-no">Non</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Pièce d'identité ?</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="ve-id-yes" name="ve_guarantorId" value="yes">
+                                    <label for="ve-id-yes">Oui</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="ve-id-no" name="ve_guarantorId" value="no">
+                                    <label for="ve-id-no">Non</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Documents de propriété ?</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="ve-property-yes" name="ve_guarantorProperty" value="yes">
+                                    <label for="ve-property-yes">Oui</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="ve-property-no" name="ve_guarantorProperty" value="no">
+                                    <label for="ve-property-no">Non</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Quel budget pouvez-vous mobiliser actuellement ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="ve-budget1" name="ve_budget" value="moins-1m" required>
+                                <label for="ve-budget1">Moins de 1 000 000 FCFA</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="ve-budget2" name="ve_budget" value="1m-2m">
+                                <label for="ve-budget2">Entre 1 000 000 et 2 000 000 FCFA</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="ve-budget3" name="ve_budget" value="2m-4m">
+                                <label for="ve-budget3">Entre 2 000 000 et 4 000 000 FCFA</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="ve-budget4" name="ve_budget" value="plus-4m">
+                                <label for="ve-budget4">Plus de 4 000 000 FCFA</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="buttons">
-                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
-                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
+                        <button type="button" class="btn-secondary" onclick="previousStep()">Retour</button>
+                        <button type="button" class="btn-primary" onclick="nextStep()">Continuer</button>
                     </div>
                 </div>
 
-                <!-- SECTION 6: GARANT FINANCIER -->
-                <div class="section" id="section6">
-                    <div class="section-title">🤝 Section 6 : Garant Financier</div>
-                    <div class="section-subtitle">Cette section n'apparaît que si vous avez indiqué avoir un garant financier.</div>
+                <!-- VISA TRAVAIL ESPAGNE -->
+                <div class="form-section" id="section-visa-travail-espagne" data-program="visa-travail-espagne">
+                    <div class="section-title">💼 Évaluation du Profil - Visa Travail Espagne</div>
 
                     <div class="form-group required">
-                        <label>Votre garant possède-t-il un NIF ?</label>
+                        <label for="vte-education">Niveau d'études</label>
+                        <input type="text" id="vte-education" name="vte_education" placeholder="Ex: Licence, Master, Baccalauréat...">
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="vte-profession">Profession actuelle</label>
+                        <input type="text" id="vte-profession" name="vte_profession" required>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="vte-experience">Années d'expérience professionnelle</label>
+                        <input type="number" id="vte-experience" name="vte_experience" min="0" max="70" required>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Parlez-vous espagnol ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="nif-yes" name="guarantorNif" value="yes" required>
-                                <label for="nif-yes">Oui</label>
+                                <input type="radio" id="vte-spanish-yes" name="vte_spanish" value="yes" required>
+                                <label for="vte-spanish-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="nif-no" name="guarantorNif" value="no">
-                                <label for="nif-no">Non</label>
+                                <input type="radio" id="vte-spanish-no" name="vte_spanish" value="no">
+                                <label for="vte-spanish-no">Non</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group required">
-                        <label>RCCM ?</label>
+                        <label>Parlez-vous anglais ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="rccm-yes" name="guarantorRccm" value="yes" required>
-                                <label for="rccm-yes">Oui</label>
+                                <input type="radio" id="vte-english-yes" name="vte_english" value="yes" required>
+                                <label for="vte-english-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="rccm-no" name="guarantorRccm" value="no">
-                                <label for="rccm-no">Non</label>
+                                <input type="radio" id="vte-english-no" name="vte_english" value="no">
+                                <label for="vte-english-no">Non</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group required">
-                        <label>ARF ?</label>
+                        <label>Possédez-vous un passeport valide ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="arf-yes" name="guarantorArf" value="yes" required>
-                                <label for="arf-yes">Oui</label>
+                                <input type="radio" id="vte-passport-yes" name="vte_passport" value="yes" required>
+                                <label for="vte-passport-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="arf-no" name="guarantorArf" value="no">
-                                <label for="arf-no">Non</label>
+                                <input type="radio" id="vte-passport-no" name="vte_passport" value="no">
+                                <label for="vte-passport-no">Non</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group required">
-                        <label>Relevé bancaire ?</label>
+                        <label>Avez-vous déjà travaillé à l'étranger ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="bankstatement-yes" name="guarantorBankStatement" value="yes" required>
-                                <label for="bankstatement-yes">Oui</label>
+                                <input type="radio" id="vte-abroad-yes" name="vte_abroadWork" value="yes" required>
+                                <label for="vte-abroad-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="bankstatement-no" name="guarantorBankStatement" value="no">
-                                <label for="bankstatement-no">Non</label>
+                                <input type="radio" id="vte-abroad-no" name="vte_abroadWork" value="no">
+                                <label for="vte-abroad-no">Non</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group required">
-                        <label>Pièce d'identité ?</label>
+                        <label>Possédez-vous un CV professionnel ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="guarantorid-yes" name="guarantorId" value="yes" required>
-                                <label for="guarantorid-yes">Oui</label>
+                                <input type="radio" id="vte-cv-yes" name="vte_cv" value="yes" required>
+                                <label for="vte-cv-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="guarantorid-no" name="guarantorId" value="no">
-                                <label for="guarantorid-no">Non</label>
+                                <input type="radio" id="vte-cv-no" name="vte_cv" value="no">
+                                <label for="vte-cv-no">Non</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group required">
-                        <label>Documents de propriété ?</label>
+                        <label>Pouvez-vous financer votre procédure ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="property-yes" name="guarantorProperty" value="yes" required>
-                                <label for="property-yes">Oui</label>
+                                <input type="radio" id="vte-finance-yes" name="vte_canFinance" value="yes" required onchange="toggleBudgetSection('vte')">
+                                <label for="vte-finance-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="property-no" name="guarantorProperty" value="no">
-                                <label for="property-no">Non</label>
+                                <input type="radio" id="vte-finance-no" name="vte_canFinance" value="no" onchange="toggleBudgetSection('vte')">
+                                <label for="vte-finance-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="conditional-group" id="vte-budget-section">
+                        <div class="form-group">
+                            <label>Budget disponible :</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="vte-budgetopt1" name="vte_budget" value="moins-1m">
+                                    <label for="vte-budgetopt1">Moins de 1 000 000 FCFA</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="vte-budgetopt2" name="vte_budget" value="1m-2m">
+                                    <label for="vte-budgetopt2">Entre 1 000 000 et 2 000 000 FCFA</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="vte-budgetopt3" name="vte_budget" value="plus-2m">
+                                    <label for="vte-budgetopt3">Plus de 2 000 000 FCFA</label>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="buttons">
-                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
-                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
+                        <button type="button" class="btn-secondary" onclick="previousStep()">Retour</button>
+                        <button type="button" class="btn-primary" onclick="nextStep()">Continuer</button>
                     </div>
                 </div>
 
-                <!-- SECTION 7: HISTORIQUE DE VOYAGE -->
-                <div class="section" id="section7">
-                    <div class="section-title">✈️ Section 7 : Historique de Voyage</div>
+                <!-- VISA VISITEUR CANADA -->
+                <div class="form-section" id="section-visa-visiteur-canada" data-program="visa-visiteur-canada">
+                    <div class="section-title">✈️ Évaluation du Profil - Visa Visiteur Canada</div>
+
+                    <div class="form-group required">
+                        <label for="vc-profession">Profession actuelle</label>
+                        <input type="text" id="vc-profession" name="vc_profession" required>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="vc-employer">Employeur ou entreprise</label>
+                        <input type="text" id="vc-employer" name="vc_employer" required>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="vc-income">Revenu mensuel</label>
+                        <input type="number" id="vc-income" name="vc_income" required>
+                    </div>
 
                     <div class="form-group required">
                         <label>Avez-vous déjà voyagé à l'étranger ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="traveled-yes" name="hasTraveled" value="yes" required onchange="toggleTravelInfo()">
-                                <label for="traveled-yes">Oui</label>
+                                <input type="radio" id="vc-travel-yes" name="vc_hasTraveled" value="yes" required onchange="toggleTravelInfo('vc')">
+                                <label for="vc-travel-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="traveled-no" name="hasTraveled" value="no" onchange="toggleTravelInfo()">
-                                <label for="traveled-no">Non</label>
+                                <input type="radio" id="vc-travel-no" name="vc_hasTraveled" value="no" onchange="toggleTravelInfo('vc')">
+                                <label for="vc-travel-no">Non</label>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group" id="travelCountriesGroup" style="display: none;">
-                        <label for="travelCountries">Liste des pays visités</label>
-                        <textarea id="travelCountries" name="travelCountries" placeholder="Ex: France, Italie, Espagne..."></textarea>
+                    <div class="conditional-group" id="vc-countries-section">
+                        <div class="form-group">
+                            <label for="vc-countries">Quels pays avez-vous visités ?</label>
+                            <textarea id="vc-countries" name="vc_countries" placeholder="Ex: France, Italie, Espagne..."></textarea>
+                        </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Avez-vous déjà obtenu un visa ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="hasvisa-yes" name="hasVisa" value="yes" required>
-                                <label for="hasvisa-yes">Oui</label>
+                                <input type="radio" id="vc-hasvisa-yes" name="vc_hasVisa" value="yes" required>
+                                <label for="vc-hasvisa-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="hasvisa-no" name="hasVisa" value="no">
-                                <label for="hasvisa-no">Non</label>
+                                <input type="radio" id="vc-hasvisa-no" name="vc_hasVisa" value="no">
+                                <label for="vc-hasvisa-no">Non</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group required">
-                        <label>Avez-vous déjà subi un refus de visa ?</label>
+                        <label>Avez-vous déjà reçu un refus de visa ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="visarefusal-yes" name="hasVisaRefusal" value="yes" required onchange="toggleRefusalInfo()">
-                                <label for="visarefusal-yes">Oui</label>
+                                <input type="radio" id="vc-refusal-yes" name="vc_hasRefusal" value="yes" required>
+                                <label for="vc-refusal-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="visarefusal-no" name="hasVisaRefusal" value="no" onchange="toggleRefusalInfo()">
-                                <label for="visarefusal-no">Non</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group" id="refusalDetailsGroup" style="display: none;">
-                        <label for="refusalDetails">Précisez le pays et la raison</label>
-                        <textarea id="refusalDetails" name="refusalDetails" placeholder="Pays et raison du refus..."></textarea>
-                    </div>
-
-                    <div class="buttons">
-                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
-                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
-                    </div>
-                </div>
-
-                <!-- SECTION 8: MOTIVATION -->
-                <div class="section" id="section8">
-                    <div class="section-title">🎯 Section 8 : Motivation</div>
-
-                    <div class="form-group required">
-                        <label>Pourquoi souhaitez-vous partir à l'étranger ? (Sélectionner une ou plusieurs)</label>
-                        <div class="checkbox-group">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="motive-studies" name="motivation" value="studies">
-                                <label for="motive-studies">Études</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="motive-work" name="motivation" value="work">
-                                <label for="motive-work">Travail</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="motive-tourism" name="motivation" value="tourism">
-                                <label for="motive-tourism">Tourisme</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="motive-business" name="motivation" value="business">
-                                <label for="motive-business">Affaires</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="motive-settlement" name="motivation" value="settlement">
-                                <label for="motive-settlement">Installation</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="motive-other" name="motivation" value="other">
-                                <label for="motive-other">Autre</label>
+                                <input type="radio" id="vc-refusal-no" name="vc_hasRefusal" value="no">
+                                <label for="vc-refusal-no">Non</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group required">
-                        <label for="projectDescription">Décrivez brièvement votre projet</label>
-                        <textarea id="projectDescription" name="projectDescription" placeholder="Détaillez votre projet d'immigration..." required></textarea>
+                        <label>Quel budget pouvez-vous consacrer à votre voyage ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="vc-budget1" name="vc_budget" value="moins-1m" required>
+                                <label for="vc-budget1">Moins de 1 000 000 FCFA</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="vc-budget2" name="vc_budget" value="1m-2.5m">
+                                <label for="vc-budget2">Entre 1 000 000 et 2 500 000 FCFA</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="vc-budget3" name="vc_budget" value="2.5m-5m">
+                                <label for="vc-budget3">Entre 2 500 000 et 5 000 000 FCFA</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="vc-budget4" name="vc_budget" value="plus-5m">
+                                <label for="vc-budget4">Plus de 5 000 000 FCFA</label>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="buttons">
-                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
-                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
-                    </div>
-                </div>
-
-                <!-- SECTION 9: ENGAGEMENT -->
-                <div class="section" id="section9">
-                    <div class="section-title">✓ Section 9 : Engagement</div>
 
                     <div class="form-group required">
-                        <label>Cases à cocher obligatoires :</label>
-                        <div class="checkbox-group">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="confirm-accuracy" name="commitment" value="accuracy" required>
-                                <label for="confirm-accuracy">Je certifie que les informations fournies sont exactes.</label>
+                        <label>Possédez-vous un passeport valide ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="vc-passport-yes" name="vc_passport" value="yes" required>
+                                <label for="vc-passport-yes">Oui</label>
                             </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="confirm-noguarantee" name="commitment" value="no-guarantee" required>
-                                <label for="confirm-noguarantee">Je comprends que l'étude de mon dossier ne garantit pas l'obtention d'un visa.</label>
+                            <div class="radio-item">
+                                <input type="radio" id="vc-passport-no" name="vc_passport" value="no">
+                                <label for="vc-passport-no">Non</label>
                             </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="confirm-contact" name="commitment" value="contact" required>
-                                <label for="confirm-contact">J'autorise Horizon Atlas à me contacter concernant mon projet.</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Possédez-vous un relevé bancaire ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="vc-bank-yes" name="vc_bankStatement" value="yes" required>
+                                <label for="vc-bank-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="vc-bank-no" name="vc_bankStatement" value="no">
+                                <label for="vc-bank-no">Non</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="buttons">
-                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
-                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
+                        <button type="button" class="btn-secondary" onclick="previousStep()">Retour</button>
+                        <button type="button" class="btn-primary" onclick="nextStep()">Continuer</button>
                     </div>
                 </div>
 
-                <!-- SECTION 10: DOCUMENTS À TÉLÉVERSER -->
-                <div class="section" id="section10">
-                    <div class="section-title">📤 Section 10 : Documents à Téléverser</div>
-                    <div class="section-subtitle">Formats autorisés : PDF, JPG, JPEG, PNG (Max 5MB par fichier)</div>
+                <!-- VISA TRAVAIL KOWEÏT -->
+                <div class="form-section" id="section-visa-travail-koweit" data-program="visa-travail-koweit">
+                    <div class="section-title">🏢 Évaluation du Profil - Visa Travail Koweït</div>
 
-                    <div class="form-group">
-                        <label>Téléchargez vos documents</label>
-                        <div class="file-upload" onclick="document.getElementById('fileInput').click()">
-                            <div class="file-upload-icon">📎</div>
-                            <div class="file-upload-text">Cliquez pour sélectionner des fichiers</div>
-                            <div class="file-upload-hint">ou glissez-déposez vos fichiers ici</div>
-                            <input type="file" id="fileInput" name="documents" multiple accept=".pdf,.jpg,.jpeg,.png">
+                    <div class="form-group required">
+                        <label for="vtk-profession">Quel est votre métier actuel ?</label>
+                        <input type="text" id="vtk-profession" name="vtk_profession" required>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Parlez-vous anglais ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="vtk-english-yes" name="vtk_english" value="yes" required>
+                                <label for="vtk-english-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="vtk-english-no" name="vtk_english" value="no">
+                                <label for="vtk-english-no">Non</label>
+                            </div>
                         </div>
-                        <ul class="file-list" id="fileList"></ul>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Parlez-vous arabe ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="vtk-arabic-yes" name="vtk_arabic" value="yes" required>
+                                <label for="vtk-arabic-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="vtk-arabic-no" name="vtk_arabic" value="no">
+                                <label for="vtk-arabic-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Possédez-vous un permis de conduire ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="vtk-license-yes" name="vtk_license" value="yes" required>
+                                <label for="vtk-license-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="vtk-license-no" name="vtk_license" value="no">
+                                <label for="vtk-license-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Avez-vous déjà travaillé à l'étranger ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="vtk-abroad-yes" name="vtk_abroadWork" value="yes" required>
+                                <label for="vtk-abroad-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="vtk-abroad-no" name="vtk_abroadWork" value="no">
+                                <label for="vtk-abroad-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Avez-vous un passeport valide ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="vtk-passport-yes" name="vtk_passport" value="yes" required>
+                                <label for="vtk-passport-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="vtk-passport-no" name="vtk_passport" value="no">
+                                <label for="vtk-passport-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Pouvez-vous mobiliser un budget compris entre 850 000 FCFA et 1 500 000 FCFA ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="vtk-budget-yes" name="vtk_canBudget" value="yes" required onchange="toggleBudgetAlt('vtk')">
+                                <label for="vtk-budget-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="vtk-budget-no" name="vtk_canBudget" value="no" onchange="toggleBudgetAlt('vtk')">
+                                <label for="vtk-budget-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="conditional-group" id="vtk-budget-section">
+                        <div class="form-group">
+                            <label for="vtk-budget-custom">Quel budget pouvez-vous mobiliser ?</label>
+                            <input type="text" id="vtk-budget-custom" name="vtk_budgetAmount" placeholder="Ex: 1 500 000 FCFA">
+                        </div>
                     </div>
 
                     <div class="buttons">
-                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
+                        <button type="button" class="btn-secondary" onclick="previousStep()">Retour</button>
+                        <button type="button" class="btn-primary" onclick="nextStep()">Continuer</button>
+                    </div>
+                </div>
+
+                <!-- RÉSIDENCE DUBAÏ -->
+                <div class="form-section" id="section-residence-dubai" data-program="residence-dubai">
+                    <div class="section-title">🏙️ Évaluation du Profil - Résidence Dubaï</div>
+
+                    <div class="form-group required">
+                        <label for="rd-profession">Profession actuelle</label>
+                        <input type="text" id="rd-profession" name="rd_profession" required>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Possédez-vous un passeport valide ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="rd-passport-yes" name="rd_passport" value="yes" required>
+                                <label for="rd-passport-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="rd-passport-no" name="rd_passport" value="no">
+                                <label for="rd-passport-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Pouvez-vous mobiliser un budget compris entre 1 500 000 FCFA et 2 000 000 FCFA ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="rd-budget-yes" name="rd_canBudget" value="yes" required onchange="toggleBudgetAlt('rd')">
+                                <label for="rd-budget-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="rd-budget-no" name="rd_canBudget" value="no" onchange="toggleBudgetAlt('rd')">
+                                <label for="rd-budget-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="conditional-group" id="rd-budget-section">
+                        <div class="form-group">
+                            <label for="rd-budget-custom">Quel budget pouvez-vous mobiliser ?</label>
+                            <input type="text" id="rd-budget-custom" name="rd_budgetAmount" placeholder="Ex: 2 000 000 FCFA">
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <button type="button" class="btn-secondary" onclick="previousStep()">Retour</button>
+                        <button type="button" class="btn-primary" onclick="nextStep()">Continuer</button>
+                    </div>
+                </div>
+
+                <!-- RÉSUMÉ DU PROFIL -->
+                <div class="form-section" id="section-summary">
+                    <div class="section-title">📊 Résumé de Votre Profil</div>
+                    <div id="profileSummary" class="profile-summary"></div>
+
+                    <div class="buttons">
+                        <button type="button" class="btn-secondary" onclick="previousStep()">Retour</button>
                         <button type="submit" class="btn-primary">Soumettre le Formulaire</button>
                     </div>
                 </div>
@@ -1079,148 +1305,102 @@
     </div>
 
     <script>
-        const totalSections = 10;
-        let currentSection = 1;
-        const selectedFiles = [];
+        let currentStep = 0;
+        let selectedProgram = null;
+        const steps = [];
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Program card selection
             const programCards = document.querySelectorAll('.card');
             programCards.forEach(card => {
                 card.addEventListener('click', function() {
                     programCards.forEach(c => c.classList.remove('selected'));
                     this.classList.add('selected');
-                    document.getElementById('selectedProgram').value = this.dataset.program;
+                    selectedProgram = this.dataset.program;
+                    document.getElementById('selectedProgram').value = selectedProgram;
+                    document.getElementById('startBtn').disabled = false;
                 });
             });
 
-            // File input handling
-            const fileInput = document.getElementById('fileInput');
-            fileInput.addEventListener('change', handleFileSelect);
-
-            // Drag and drop
-            const fileUpload = document.querySelector('.file-upload');
-            fileUpload.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                fileUpload.style.background = '#e8f3ff';
-            });
-            fileUpload.addEventListener('dragleave', () => {
-                fileUpload.style.background = '#f0f7ff';
-            });
-            fileUpload.addEventListener('drop', (e) => {
-                e.preventDefault();
-                fileUpload.style.background = '#f0f7ff';
-                const files = e.dataTransfer.files;
-                fileInput.files = files;
-                handleFileSelect({ target: { files } });
-            });
-
-            // Form submission
             document.getElementById('assessmentForm').addEventListener('submit', handleFormSubmit);
         });
 
-        function updateProgress() {
-            const progress = (currentSection / totalSections) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-            document.getElementById('progressText').textContent = `Étape ${currentSection} sur ${totalSections}`;
+        function startAssessment() {
+            if (!selectedProgram) {
+                showError('Veuillez sélectionner un programme');
+                return;
+            }
+
+            steps.length = 0;
+            steps.push('section-personal');
+            steps.push(`section-${selectedProgram}`);
+            steps.push('section-summary');
+
+            currentStep = 0;
+            showStep(currentStep);
         }
 
-        function showSection(sectionNum) {
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(s => s.classList.remove('active'));
-            document.getElementById(`section${sectionNum}`).classList.add('active');
+        function backToProgram() {
+            steps.length = 0;
+            selectedProgram = null;
+            document.getElementById('selectedProgram').value = '';
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+            document.getElementById('startBtn').disabled = true;
+            showSection('section-program');
+            updateProgress();
+        }
+
+        function showStep(stepIndex) {
+            document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+            const stepId = steps[stepIndex];
+            document.getElementById(stepId).classList.add('active');
             updateProgress();
             window.scrollTo(0, 0);
         }
 
-        function nextSection() {
-            // Validate current section
-            if (!validateSection(currentSection)) {
+        function showSection(sectionId) {
+            document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            updateProgress();
+            window.scrollTo(0, 0);
+        }
+
+        function nextStep() {
+            if (!validateCurrentStep()) {
                 return;
             }
 
-            // Check if section 6 should be shown
-            if (currentSection === 2) {
-                if (document.getElementById('guarantor-yes').checked) {
-                    currentSection = 6;
-                } else {
-                    currentSection = 3;
-                }
-            }
-            // Skip section 5 if not Spain program
-            else if (currentSection === 4) {
-                const program = document.getElementById('selectedProgram').value;
-                if (program.includes('espagne')) {
-                    currentSection = 5;
-                } else {
-                    currentSection = 7;
-                }
-            }
-            // Skip section 6 if already shown
-            else if (currentSection === 6) {
-                currentSection = 3;
+            if (currentStep === steps.length - 1) {
+                generateProfileSummary();
+                showStep(currentStep);
             } else {
-                currentSection++;
-            }
-
-            if (currentSection <= totalSections) {
-                showSection(currentSection);
+                currentStep++;
+                showStep(currentStep);
             }
         }
 
-        function prevSection() {
-            if (currentSection > 1) {
-                // Handle special navigation for skipped sections
-                if (currentSection === 3) {
-                    const hasGuarantor = document.getElementById('guarantor-yes').checked;
-                    if (hasGuarantor) {
-                        currentSection = 6;
-                    } else {
-                        currentSection = 2;
-                    }
-                } else if (currentSection === 5) {
-                    currentSection = 4;
-                } else if (currentSection === 6) {
-                    currentSection = 2;
-                } else if (currentSection === 7) {
-                    const program = document.getElementById('selectedProgram').value;
-                    if (program.includes('espagne')) {
-                        currentSection = 5;
-                    } else {
-                        currentSection = 4;
-                    }
-                } else {
-                    currentSection--;
-                }
-                showSection(currentSection);
+        function previousStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
             }
         }
 
-        function validateSection(sectionNum) {
-            const form = document.getElementById('assessmentForm');
-            const section = document.getElementById(`section${sectionNum}`);
+        function validateCurrentStep() {
+            const stepId = steps[currentStep];
+            const section = document.getElementById(stepId);
             const requiredFields = section.querySelectorAll('[required]');
 
             for (let field of requiredFields) {
-                if (!field.value && field.type !== 'checkbox' && field.type !== 'radio') {
-                    showError(`Veuillez remplir tous les champs obligatoires`);
-                    return false;
-                }
-                
-                if ((field.type === 'checkbox' || field.type === 'radio') && field.name) {
-                    const fieldGroup = section.querySelectorAll(`[name="${field.name}"]`);
-                    let isChecked = false;
-                    for (let f of fieldGroup) {
-                        if (f.checked) {
-                            isChecked = true;
-                            break;
-                        }
-                    }
+                if (field.type === 'radio' || field.type === 'checkbox') {
+                    const fieldName = field.name;
+                    const isChecked = section.querySelector(`[name="${fieldName}"]:checked`);
                     if (!isChecked) {
-                        showError(`Veuillez sélectionner une option`);
+                        showError('Veuillez remplir tous les champs obligatoires');
                         return false;
                     }
+                } else if (!field.value) {
+                    showError('Veuillez remplir tous les champs obligatoires');
+                    return false;
                 }
             }
 
@@ -1228,120 +1408,169 @@
             return true;
         }
 
-        function toggleSection6() {
-            const hasGuarantor = document.getElementById('guarantor-yes').checked;
-            // Section 6 will be handled in nextSection logic
-        }
-
-        function toggleTravelInfo() {
-            const hasTraveled = document.getElementById('traveled-yes').checked;
-            document.getElementById('travelCountriesGroup').style.display = hasTraveled ? 'block' : 'none';
-            const travelInput = document.getElementById('travelCountries');
-            if (!hasTraveled) {
-                travelInput.value = '';
+        function updateProgress() {
+            if (steps.length > 0) {
+                const progress = ((currentStep + 1) / (steps.length + 1)) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+                document.getElementById('progressText').textContent = `Étape ${currentStep + 1} sur ${steps.length}`;
             }
         }
 
-        function toggleRefusalInfo() {
-            const hasRefusal = document.getElementById('visarefusal-yes').checked;
-            document.getElementById('refusalDetailsGroup').style.display = hasRefusal ? 'block' : 'none';
-            const refusalInput = document.getElementById('refusalDetails');
-            if (!hasRefusal) {
-                refusalInput.value = '';
+        function toggleGuarantorSection(prefix) {
+            const hasGuarantor = document.querySelector(`input[name="${prefix}_hasGuarantor"]:checked`);
+            const section = document.getElementById(`${prefix}-guarantor-section`);
+            if (hasGuarantor && hasGuarantor.value === 'yes') {
+                section.classList.add('visible');
+            } else {
+                section.classList.remove('visible');
             }
         }
 
-        function handleFileSelect(e) {
-            const files = e.target.files;
-            const fileList = document.getElementById('fileList');
-            
-            for (let file of files) {
-                // Validate file type
-                const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
-                if (!allowedTypes.includes(file.type)) {
-                    showError('Format de fichier non autorisé. Utilisez PDF, JPG ou PNG.');
-                    continue;
-                }
-
-                // Validate file size (5MB)
-                if (file.size > 5 * 1024 * 1024) {
-                    showError('Le fichier ' + file.name + ' dépasse 5MB.');
-                    continue;
-                }
-
-                // Check if file already added
-                const fileExists = selectedFiles.some(f => f.name === file.name && f.size === file.size);
-                if (!fileExists) {
-                    selectedFiles.push(file);
-                }
+        function toggleBudgetSection(prefix) {
+            const canFinance = document.querySelector(`input[name="${prefix}_canFinance"]:checked`);
+            const section = document.getElementById(`${prefix}-budget-section`);
+            if (canFinance && canFinance.value === 'yes') {
+                section.classList.add('visible');
+            } else {
+                section.classList.remove('visible');
             }
-
-            updateFileList();
         }
 
-        function updateFileList() {
-            const fileList = document.getElementById('fileList');
-            fileList.innerHTML = '';
-            
-            selectedFiles.forEach((file, index) => {
-                const li = document.createElement('li');
-                li.className = 'file-item';
-                li.innerHTML = `
-                    <span>${file.name} (${(file.size / 1024).toFixed(2)} KB)</span>
-                    <button type="button" class="file-item-remove" onclick="removeFile(${index})">Supprimer</button>
-                `;
-                fileList.appendChild(li);
+        function toggleBudgetAlt(prefix) {
+            const hasBudget = document.querySelector(`input[name="${prefix}_canBudget"]:checked`);
+            const section = document.getElementById(`${prefix}-budget-section`);
+            if (hasBudget && hasBudget.value === 'no') {
+                section.classList.add('visible');
+            } else {
+                section.classList.remove('visible');
+            }
+        }
+
+        function toggleTravelInfo(prefix) {
+            const hasTraveled = document.querySelector(`input[name="${prefix}_hasTraveled"]:checked`);
+            const section = document.getElementById(`${prefix}-countries-section`);
+            if (hasTraveled && hasTraveled.value === 'yes') {
+                section.classList.add('visible');
+            } else {
+                section.classList.remove('visible');
+            }
+        }
+
+        function generateProfileSummary() {
+            const form = document.getElementById('assessmentForm');
+            const formData = new FormData(form);
+            const fullName = formData.get('fullName');
+            const email = formData.get('email');
+            const phone = formData.get('phone');
+
+            // Count completed fields
+            let completedFields = 0;
+            let totalFields = 0;
+
+            const allInputs = document.querySelector(`#section-${selectedProgram}`).querySelectorAll('[required]');
+            totalFields = allInputs.length;
+
+            allInputs.forEach(input => {
+                if (input.type === 'radio' || input.type === 'checkbox') {
+                    if (input.checked) completedFields++;
+                } else if (input.value) {
+                    completedFields++;
+                }
             });
-        }
 
-        function removeFile(index) {
-            selectedFiles.splice(index, 1);
-            updateFileList();
+            // Calculate readiness level
+            const percentage = (completedFields / totalFields) * 100;
+            let readinessLevel = 'Insuffisant';
+            let readinessClass = 'readiness-insufficient';
+
+            if (percentage >= 90) {
+                readinessLevel = 'Excellent';
+                readinessClass = 'readiness-excellent';
+            } else if (percentage >= 75) {
+                readinessLevel = 'Bon';
+                readinessClass = 'readiness-good';
+            } else if (percentage >= 60) {
+                readinessLevel = 'Moyen';
+                readinessClass = 'readiness-medium';
+            }
+
+            // Get program display name
+            const programNames = {
+                'visa-etudes-espagne': '🎓 Visa Études Espagne',
+                'visa-travail-espagne': '💼 Visa Travail Espagne',
+                'visa-visiteur-canada': '✈️ Visa Visiteur Canada',
+                'visa-travail-koweit': '🏢 Visa Travail Koweït',
+                'residence-dubai': '🏙️ Résidence Dubaï'
+            };
+
+            // Get budget information
+            let budget = 'Non spécifié';
+            const budgetInputs = document.querySelectorAll(`[name*="_budget"]:checked, [name*="_budgetAmount"]`);
+            budgetInputs.forEach(input => {
+                if (input.value && input.value !== 'yes' && input.value !== 'no') {
+                    budget = input.value;
+                }
+            });
+
+            // Build summary
+            let summaryHTML = `
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <div class="summary-label">Programme Choisi</div>
+                        <div class="summary-value">${programNames[selectedProgram] || selectedProgram}</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">Nom Complet</div>
+                        <div class="summary-value">${fullName || 'Non fourni'}</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">Email</div>
+                        <div class="summary-value">${email || 'Non fourni'}</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">Téléphone</div>
+                        <div class="summary-value">${phone || 'Non fourni'}</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">Budget Disponible</div>
+                        <div class="summary-value">${budget}</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">Complétude du Profil</div>
+                        <div class="summary-value">${completedFields}/${totalFields} champs</div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <div class="readiness-badge ${readinessClass}">
+                        Niveau de Préparation: ${readinessLevel}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('profileSummary').innerHTML = summaryHTML;
         }
 
         function showError(message) {
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'error-message show';
+            const errorDiv = document.getElementById('errorMessage');
             errorDiv.textContent = message;
-            const content = document.querySelector('.content');
-            content.insertBefore(errorDiv, content.firstChild);
-            setTimeout(() => errorDiv.remove(), 5000);
+            errorDiv.classList.add('show');
+            setTimeout(() => errorDiv.classList.remove('show'), 5000);
         }
 
         function clearError() {
-            const errors = document.querySelectorAll('.error-message');
-            errors.forEach(e => e.remove());
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.classList.remove('show');
         }
 
         async function handleFormSubmit(e) {
             e.preventDefault();
 
-            if (!validateSection(10)) {
-                return;
-            }
+            const form = document.getElementById('assessmentForm');
+            const formData = new FormData(form);
 
-            const formData = new FormData(document.getElementById('assessmentForm'));
-            
-            // Add checkbox values for motivation
-            const motivations = [];
-            document.querySelectorAll('input[name="motivation"]:checked').forEach(cb => {
-                motivations.push(cb.value);
-            });
-            formData.append('motivations', motivations.join(', '));
+            // Convert FormData to object
+            const data = Object.fromEntries(formData);
 
-            // Add commitments
-            const commitments = [];
-            document.querySelectorAll('input[name="commitment"]:checked').forEach(cb => {
-                commitments.push(cb.value);
-            });
-            formData.append('commitments', commitments.join(', '));
-
-            // Add files
-            selectedFiles.forEach(file => {
-                formData.append('files', file);
-            });
-
-            // Submit to FormSubmit
             try {
                 const response = await fetch('https://formsubmit.co/abdoulahimail@yahoo.com', {
                     method: 'POST',
@@ -1349,10 +1578,9 @@
                 });
 
                 if (response.ok) {
-                    // Show success message
-                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                    document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
                     document.getElementById('successMessage').classList.add('show');
-                    document.getElementById('assessmentForm').style.display = 'none';
+                    form.style.display = 'none';
                     document.querySelector('.progress-container').style.display = 'none';
                 } else {
                     showError('Une erreur est survenue lors de l\'envoi du formulaire.');
@@ -1361,9 +1589,6 @@
                 showError('Erreur de connexion. Veuillez vérifier votre connexion internet.');
             }
         }
-
-        // Initialize progress
-        updateProgress();
     </script>
 </body>
 </html>
