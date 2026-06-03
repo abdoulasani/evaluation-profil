@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizon Atlas - Évaluation d'Immigration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f3460 0%, #1a5490 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f3460 0%, #1a5490 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .progress-container {
+            background: #f8f9fa;
+            padding: 30px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #0f3460 0%, #1a5490 100%);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #0f3460;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #0f3460;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .welcome-message {
+            background: #f0f7ff;
+            border-left: 4px solid #1a5490;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #0f3460;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .form-group.required label::after {
+            content: " *";
+            color: #e74c3c;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group input[type="date"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1a5490;
+            box-shadow: 0 0 0 3px rgba(26, 84, 144, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .radio-item,
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-item:hover,
+        .checkbox-item:hover {
+            border-color: #1a5490;
+            background: #f8f9ff;
+        }
+
+        .radio-item input,
+        .checkbox-item input {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: #1a5490;
+        }
+
+        .radio-item label,
+        .checkbox-item label {
+            margin: 0;
+            font-weight: normal;
+            cursor: pointer;
+            flex-grow: 1;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: #1a5490;
+            box-shadow: 0 10px 30px rgba(26, 84, 144, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .card.selected {
+            background: linear-gradient(135deg, #0f3460 0%, #1a5490 100%);
+            color: white;
+            border-color: #0f3460;
+        }
+
+        .card-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .card-description {
+            font-size: 0.9em;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        .card.selected .card-description {
+            opacity: 0.95;
+        }
+
+        .card-checkbox {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .card.selected .card-checkbox {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-color: white;
+            font-size: 16px;
+            color: #0f3460;
+        }
+
+        .file-upload {
+            border: 2px dashed #1a5490;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            background: #f0f7ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .file-upload:hover {
+            background: #e8f3ff;
+            border-color: #0f3460;
+        }
+
+        .file-upload input {
+            display: none;
+        }
+
+        .file-upload-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .file-upload-text {
+            color: #0f3460;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .file-upload-hint {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .file-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .file-item {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+        }
+
+        .file-item-remove {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: background 0.3s ease;
+        }
+
+        .file-item-remove:hover {
+            background: #c0392b;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e9ecef;
+        }
+
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0f3460 0%, #1a5490 100%);
+            color: white;
+            flex-grow: 1;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(26, 84, 144, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #e9ecef;
+            color: #0f3460;
+            min-width: 120px;
+        }
+
+        .btn-secondary:hover {
+            background: #dee2e6;
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: slideIn 0.5s ease;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-message h2 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .success-message p {
+            line-height: 1.8;
+            font-size: 0.95em;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error-message {
+            background: #f8d7da;
+            border: 2px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e9ecef;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .header p {
+                font-size: 0.95em;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+                flex-direction: column-reverse;
+            }
+
+            .btn-secondary {
+                width: 100%;
+            }
+
+            .section-title {
+                font-size: 1.4em;
+            }
+
+            .content {
+                padding: 25px 20px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌍 Horizon Atlas</h1>
+            <p>Évaluation de votre projet d'immigration et de mobilité internationale</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">Étape 1 sur 10</div>
+        </div>
+
+        <div class="content">
+            <div id="successMessage" class="success-message">
+                <h2>✓ Merci pour votre confiance</h2>
+                <p>Votre formulaire a été transmis avec succès à Horizon Atlas.</p>
+                <p>Notre équipe analysera votre profil et vous contactera prochainement afin de vous accompagner dans votre projet.</p>
+            </div>
+
+            <form id="assessmentForm">
+                <!-- SECTION 1: PROGRAMME SOUHAITÉ -->
+                <div class="section active" id="section1">
+                    <div class="section-title">📋 Section 1 : Programme Souhaité</div>
+                    <div class="welcome-message">
+                        <strong>Bienvenue chez Horizon Atlas</strong><br><br>
+                        Ce questionnaire nous permet d'évaluer votre profil, votre niveau de préparation et votre admissibilité à nos différents programmes de mobilité internationale.<br><br>
+                        Les informations fournies resteront strictement confidentielles et seront utilisées uniquement dans le cadre de l'étude de votre dossier.<br><br>
+                        Veuillez répondre avec précision afin que notre équipe puisse vous proposer la solution la plus adaptée à votre situation.
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Quel programme souhaitez-vous explorer ?</label>
+                        <div class="card-grid" id="programCards">
+                            <div class="card" data-program="visa-etudes-espagne">
+                                <div class="card-checkbox">✓</div>
+                                <div class="card-icon">🎓</div>
+                                <div class="card-title">Visa Études Espagne</div>
+                                <div class="card-description">Étudier, vivre et travailler légalement en Espagne pendant vos études. Cours de langue espagnole.</div>
+                            </div>
+                            <div class="card" data-program="visa-travail-espagne">
+                                <div class="card-checkbox">✓</div>
+                                <div class="card-icon">💼</div>
+                                <div class="card-title">Visa Travail Espagne</div>
+                                <div class="card-description">Opportunités professionnelles et installation en Espagne.</div>
+                            </div>
+                            <div class="card" data-program="visa-visiteur-canada">
+                                <div class="card-checkbox">✓</div>
+                                <div class="card-icon">✈️</div>
+                                <div class="card-title">Visa Visiteur Canada</div>
+                                <div class="card-description">Voyage touristique, visite familiale ou voyage d'affaires.</div>
+                            </div>
+                            <div class="card" data-program="visa-travail-koweit">
+                                <div class="card-checkbox">✓</div>
+                                <div class="card-icon">🏢</div>
+                                <div class="card-title">Visa Travail Koweït</div>
+                                <div class="card-description">Opportunités d'emploi au Koweït.</div>
+                            </div>
+                            <div class="card" data-program="residence-dubai">
+                                <div class="card-checkbox">✓</div>
+                                <div class="card-icon">🏙️</div>
+                                <div class="card-title">Résidence Dubaï</div>
+                                <div class="card-description">Installation et résidence aux Émirats Arabes Unis.</div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="selectedProgram" name="program" required>
+                    </div>
+
+                    <div class="buttons">
+                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: ÉVALUATION FINANCIÈRE -->
+                <div class="section" id="section2">
+                    <div class="section-title">💰 Section 2 : Évaluation Financière</div>
+                    <div class="section-subtitle">
+                        Chaque programme nécessite une capacité financière minimale. Cette information nous permet de vérifier la faisabilité de votre projet et de vous orienter vers le programme correspondant à votre situation.
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Quel budget pouvez-vous mobiliser actuellement pour votre projet ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="budget1" name="budget" value="moins-500k" required>
+                                <label for="budget1">Moins de 500 000 FCFA</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="budget2" name="budget" value="500k-1m">
+                                <label for="budget2">Entre 500 000 et 1 000 000 FCFA</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="budget3" name="budget" value="1m-2m">
+                                <label for="budget3">Entre 1 000 000 et 2 000 000 FCFA</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="budget4" name="budget" value="2m-5m">
+                                <label for="budget4">Entre 2 000 000 et 5 000 000 FCFA</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="budget5" name="budget" value="plus-5m">
+                                <label for="budget5">Plus de 5 000 000 FCFA</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Disposez-vous d'un garant financier ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="guarantor-yes" name="hasGuarantor" value="yes" required onchange="toggleSection6()">
+                                <label for="guarantor-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="guarantor-no" name="hasGuarantor" value="no" onchange="toggleSection6()">
+                                <label for="guarantor-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
+                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
+                    </div>
+                </div>
+
+                <!-- SECTION 3: INFORMATIONS PERSONNELLES -->
+                <div class="section" id="section3">
+                    <div class="section-title">👤 Section 3 : Informations Personnelles</div>
+
+                    <div class="form-group required">
+                        <label for="fullName">Nom complet</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="birthDate">Date de naissance</label>
+                        <input type="date" id="birthDate" name="birthDate" required>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="birthCity">Ville de naissance</label>
+                        <input type="text" id="birthCity" name="birthCity" required>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="birthCountry">Pays de naissance</label>
+                        <input type="text" id="birthCountry" name="birthCountry" required>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="nationality">Nationalité</label>
+                        <input type="text" id="nationality" name="nationality" required>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="maritalStatus">État matrimonial</label>
+                        <select id="maritalStatus" name="maritalStatus" required>
+                            <option value="">-- Sélectionner --</option>
+                            <option value="single">Célibataire</option>
+                            <option value="married">Marié(e)</option>
+                            <option value="divorced">Divorcé(e)</option>
+                            <option value="widowed">Veuf/Veuve</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="phone">Téléphone</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="whatsapp">WhatsApp</label>
+                        <input type="tel" id="whatsapp" name="whatsapp" required>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="email">Adresse e-mail</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="buttons">
+                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
+                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
+                    </div>
+                </div>
+
+                <!-- SECTION 4: DOCUMENTS PERSONNELS -->
+                <div class="section" id="section4">
+                    <div class="section-title">📄 Section 4 : Documents Personnels</div>
+                    <div class="section-subtitle">Possédez-vous actuellement :</div>
+
+                    <div class="form-group required">
+                        <label>Passeport valide ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="passport-yes" name="hasPassport" value="yes" required>
+                                <label for="passport-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="passport-no" name="hasPassport" value="no">
+                                <label for="passport-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Acte de naissance ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="birthcert-yes" name="hasBirthCert" value="yes" required>
+                                <label for="birthcert-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="birthcert-no" name="hasBirthCert" value="no">
+                                <label for="birthcert-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Certificat de résidence ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="residence-yes" name="hasResidenceCert" value="yes" required>
+                                <label for="residence-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="residence-no" name="hasResidenceCert" value="no">
+                                <label for="residence-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Casier judiciaire ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="criminal-yes" name="hasCriminalRecord" value="yes" required>
+                                <label for="criminal-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="criminal-no" name="hasCriminalRecord" value="no">
+                                <label for="criminal-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Certificat médical ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="medical-yes" name="hasMedicalCert" value="yes" required>
+                                <label for="medical-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="medical-no" name="hasMedicalCert" value="no">
+                                <label for="medical-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Photos d'identité récentes ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="photos-yes" name="hasPhotos" value="yes" required>
+                                <label for="photos-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="photos-no" name="hasPhotos" value="no">
+                                <label for="photos-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
+                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
+                    </div>
+                </div>
+
+                <!-- SECTION 5: ÉVALUATION POUR ESPAGNE -->
+                <div class="section" id="section5">
+                    <div class="section-title">🎓 Section 5 : Évaluation pour les Programmes Espagne</div>
+                    <div class="section-subtitle">Cette section n'apparaît que si vous avez choisi l'un des programmes Espagne.</div>
+
+                    <div class="form-group required">
+                        <label>Possédez-vous un Baccalauréat ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="bac-yes" name="hasBachelor" value="yes" required>
+                                <label for="bac-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="bac-no" name="hasBachelor" value="no">
+                                <label for="bac-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Relevés de notes du Baccalauréat ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="bacnotes-yes" name="hasBachelorNotes" value="yes" required>
+                                <label for="bacnotes-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="bacnotes-no" name="hasBachelorNotes" value="no">
+                                <label for="bacnotes-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Bulletins scolaires récents ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="schoolrec-yes" name="hasSchoolRecords" value="yes" required>
+                                <label for="schoolrec-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="schoolrec-no" name="hasSchoolRecords" value="no">
+                                <label for="schoolrec-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
+                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
+                    </div>
+                </div>
+
+                <!-- SECTION 6: GARANT FINANCIER -->
+                <div class="section" id="section6">
+                    <div class="section-title">🤝 Section 6 : Garant Financier</div>
+                    <div class="section-subtitle">Cette section n'apparaît que si vous avez indiqué avoir un garant financier.</div>
+
+                    <div class="form-group required">
+                        <label>Votre garant possède-t-il un NIF ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="nif-yes" name="guarantorNif" value="yes" required>
+                                <label for="nif-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="nif-no" name="guarantorNif" value="no">
+                                <label for="nif-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>RCCM ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="rccm-yes" name="guarantorRccm" value="yes" required>
+                                <label for="rccm-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="rccm-no" name="guarantorRccm" value="no">
+                                <label for="rccm-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>ARF ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="arf-yes" name="guarantorArf" value="yes" required>
+                                <label for="arf-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="arf-no" name="guarantorArf" value="no">
+                                <label for="arf-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Relevé bancaire ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="bankstatement-yes" name="guarantorBankStatement" value="yes" required>
+                                <label for="bankstatement-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="bankstatement-no" name="guarantorBankStatement" value="no">
+                                <label for="bankstatement-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Pièce d'identité ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="guarantorid-yes" name="guarantorId" value="yes" required>
+                                <label for="guarantorid-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="guarantorid-no" name="guarantorId" value="no">
+                                <label for="guarantorid-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Documents de propriété ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="property-yes" name="guarantorProperty" value="yes" required>
+                                <label for="property-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="property-no" name="guarantorProperty" value="no">
+                                <label for="property-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
+                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
+                    </div>
+                </div>
+
+                <!-- SECTION 7: HISTORIQUE DE VOYAGE -->
+                <div class="section" id="section7">
+                    <div class="section-title">✈️ Section 7 : Historique de Voyage</div>
+
+                    <div class="form-group required">
+                        <label>Avez-vous déjà voyagé à l'étranger ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="traveled-yes" name="hasTraveled" value="yes" required onchange="toggleTravelInfo()">
+                                <label for="traveled-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="traveled-no" name="hasTraveled" value="no" onchange="toggleTravelInfo()">
+                                <label for="traveled-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="travelCountriesGroup" style="display: none;">
+                        <label for="travelCountries">Liste des pays visités</label>
+                        <textarea id="travelCountries" name="travelCountries" placeholder="Ex: France, Italie, Espagne..."></textarea>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Avez-vous déjà obtenu un visa ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="hasvisa-yes" name="hasVisa" value="yes" required>
+                                <label for="hasvisa-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="hasvisa-no" name="hasVisa" value="no">
+                                <label for="hasvisa-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Avez-vous déjà subi un refus de visa ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="visarefusal-yes" name="hasVisaRefusal" value="yes" required onchange="toggleRefusalInfo()">
+                                <label for="visarefusal-yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="visarefusal-no" name="hasVisaRefusal" value="no" onchange="toggleRefusalInfo()">
+                                <label for="visarefusal-no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="refusalDetailsGroup" style="display: none;">
+                        <label for="refusalDetails">Précisez le pays et la raison</label>
+                        <textarea id="refusalDetails" name="refusalDetails" placeholder="Pays et raison du refus..."></textarea>
+                    </div>
+
+                    <div class="buttons">
+                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
+                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
+                    </div>
+                </div>
+
+                <!-- SECTION 8: MOTIVATION -->
+                <div class="section" id="section8">
+                    <div class="section-title">🎯 Section 8 : Motivation</div>
+
+                    <div class="form-group required">
+                        <label>Pourquoi souhaitez-vous partir à l'étranger ? (Sélectionner une ou plusieurs)</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="motive-studies" name="motivation" value="studies">
+                                <label for="motive-studies">Études</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="motive-work" name="motivation" value="work">
+                                <label for="motive-work">Travail</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="motive-tourism" name="motivation" value="tourism">
+                                <label for="motive-tourism">Tourisme</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="motive-business" name="motivation" value="business">
+                                <label for="motive-business">Affaires</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="motive-settlement" name="motivation" value="settlement">
+                                <label for="motive-settlement">Installation</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="motive-other" name="motivation" value="other">
+                                <label for="motive-other">Autre</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="projectDescription">Décrivez brièvement votre projet</label>
+                        <textarea id="projectDescription" name="projectDescription" placeholder="Détaillez votre projet d'immigration..." required></textarea>
+                    </div>
+
+                    <div class="buttons">
+                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
+                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
+                    </div>
+                </div>
+
+                <!-- SECTION 9: ENGAGEMENT -->
+                <div class="section" id="section9">
+                    <div class="section-title">✓ Section 9 : Engagement</div>
+
+                    <div class="form-group required">
+                        <label>Cases à cocher obligatoires :</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="confirm-accuracy" name="commitment" value="accuracy" required>
+                                <label for="confirm-accuracy">Je certifie que les informations fournies sont exactes.</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="confirm-noguarantee" name="commitment" value="no-guarantee" required>
+                                <label for="confirm-noguarantee">Je comprends que l'étude de mon dossier ne garantit pas l'obtention d'un visa.</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="confirm-contact" name="commitment" value="contact" required>
+                                <label for="confirm-contact">J'autorise Horizon Atlas à me contacter concernant mon projet.</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
+                        <button type="button" class="btn-primary" onclick="nextSection()">Continuer</button>
+                    </div>
+                </div>
+
+                <!-- SECTION 10: DOCUMENTS À TÉLÉVERSER -->
+                <div class="section" id="section10">
+                    <div class="section-title">📤 Section 10 : Documents à Téléverser</div>
+                    <div class="section-subtitle">Formats autorisés : PDF, JPG, JPEG, PNG (Max 5MB par fichier)</div>
+
+                    <div class="form-group">
+                        <label>Téléchargez vos documents</label>
+                        <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+                            <div class="file-upload-icon">📎</div>
+                            <div class="file-upload-text">Cliquez pour sélectionner des fichiers</div>
+                            <div class="file-upload-hint">ou glissez-déposez vos fichiers ici</div>
+                            <input type="file" id="fileInput" name="documents" multiple accept=".pdf,.jpg,.jpeg,.png">
+                        </div>
+                        <ul class="file-list" id="fileList"></ul>
+                    </div>
+
+                    <div class="buttons">
+                        <button type="button" class="btn-secondary" onclick="prevSection()">Retour</button>
+                        <button type="submit" class="btn-primary">Soumettre le Formulaire</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const totalSections = 10;
+        let currentSection = 1;
+        const selectedFiles = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Program card selection
+            const programCards = document.querySelectorAll('.card');
+            programCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    programCards.forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    document.getElementById('selectedProgram').value = this.dataset.program;
+                });
+            });
+
+            // File input handling
+            const fileInput = document.getElementById('fileInput');
+            fileInput.addEventListener('change', handleFileSelect);
+
+            // Drag and drop
+            const fileUpload = document.querySelector('.file-upload');
+            fileUpload.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                fileUpload.style.background = '#e8f3ff';
+            });
+            fileUpload.addEventListener('dragleave', () => {
+                fileUpload.style.background = '#f0f7ff';
+            });
+            fileUpload.addEventListener('drop', (e) => {
+                e.preventDefault();
+                fileUpload.style.background = '#f0f7ff';
+                const files = e.dataTransfer.files;
+                fileInput.files = files;
+                handleFileSelect({ target: { files } });
+            });
+
+            // Form submission
+            document.getElementById('assessmentForm').addEventListener('submit', handleFormSubmit);
+        });
+
+        function updateProgress() {
+            const progress = (currentSection / totalSections) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `Étape ${currentSection} sur ${totalSections}`;
+        }
+
+        function showSection(sectionNum) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(s => s.classList.remove('active'));
+            document.getElementById(`section${sectionNum}`).classList.add('active');
+            updateProgress();
+            window.scrollTo(0, 0);
+        }
+
+        function nextSection() {
+            // Validate current section
+            if (!validateSection(currentSection)) {
+                return;
+            }
+
+            // Check if section 6 should be shown
+            if (currentSection === 2) {
+                if (document.getElementById('guarantor-yes').checked) {
+                    currentSection = 6;
+                } else {
+                    currentSection = 3;
+                }
+            }
+            // Skip section 5 if not Spain program
+            else if (currentSection === 4) {
+                const program = document.getElementById('selectedProgram').value;
+                if (program.includes('espagne')) {
+                    currentSection = 5;
+                } else {
+                    currentSection = 7;
+                }
+            }
+            // Skip section 6 if already shown
+            else if (currentSection === 6) {
+                currentSection = 3;
+            } else {
+                currentSection++;
+            }
+
+            if (currentSection <= totalSections) {
+                showSection(currentSection);
+            }
+        }
+
+        function prevSection() {
+            if (currentSection > 1) {
+                // Handle special navigation for skipped sections
+                if (currentSection === 3) {
+                    const hasGuarantor = document.getElementById('guarantor-yes').checked;
+                    if (hasGuarantor) {
+                        currentSection = 6;
+                    } else {
+                        currentSection = 2;
+                    }
+                } else if (currentSection === 5) {
+                    currentSection = 4;
+                } else if (currentSection === 6) {
+                    currentSection = 2;
+                } else if (currentSection === 7) {
+                    const program = document.getElementById('selectedProgram').value;
+                    if (program.includes('espagne')) {
+                        currentSection = 5;
+                    } else {
+                        currentSection = 4;
+                    }
+                } else {
+                    currentSection--;
+                }
+                showSection(currentSection);
+            }
+        }
+
+        function validateSection(sectionNum) {
+            const form = document.getElementById('assessmentForm');
+            const section = document.getElementById(`section${sectionNum}`);
+            const requiredFields = section.querySelectorAll('[required]');
+
+            for (let field of requiredFields) {
+                if (!field.value && field.type !== 'checkbox' && field.type !== 'radio') {
+                    showError(`Veuillez remplir tous les champs obligatoires`);
+                    return false;
+                }
+                
+                if ((field.type === 'checkbox' || field.type === 'radio') && field.name) {
+                    const fieldGroup = section.querySelectorAll(`[name="${field.name}"]`);
+                    let isChecked = false;
+                    for (let f of fieldGroup) {
+                        if (f.checked) {
+                            isChecked = true;
+                            break;
+                        }
+                    }
+                    if (!isChecked) {
+                        showError(`Veuillez sélectionner une option`);
+                        return false;
+                    }
+                }
+            }
+
+            clearError();
+            return true;
+        }
+
+        function toggleSection6() {
+            const hasGuarantor = document.getElementById('guarantor-yes').checked;
+            // Section 6 will be handled in nextSection logic
+        }
+
+        function toggleTravelInfo() {
+            const hasTraveled = document.getElementById('traveled-yes').checked;
+            document.getElementById('travelCountriesGroup').style.display = hasTraveled ? 'block' : 'none';
+            const travelInput = document.getElementById('travelCountries');
+            if (!hasTraveled) {
+                travelInput.value = '';
+            }
+        }
+
+        function toggleRefusalInfo() {
+            const hasRefusal = document.getElementById('visarefusal-yes').checked;
+            document.getElementById('refusalDetailsGroup').style.display = hasRefusal ? 'block' : 'none';
+            const refusalInput = document.getElementById('refusalDetails');
+            if (!hasRefusal) {
+                refusalInput.value = '';
+            }
+        }
+
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            const fileList = document.getElementById('fileList');
+            
+            for (let file of files) {
+                // Validate file type
+                const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
+                if (!allowedTypes.includes(file.type)) {
+                    showError('Format de fichier non autorisé. Utilisez PDF, JPG ou PNG.');
+                    continue;
+                }
+
+                // Validate file size (5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    showError('Le fichier ' + file.name + ' dépasse 5MB.');
+                    continue;
+                }
+
+                // Check if file already added
+                const fileExists = selectedFiles.some(f => f.name === file.name && f.size === file.size);
+                if (!fileExists) {
+                    selectedFiles.push(file);
+                }
+            }
+
+            updateFileList();
+        }
+
+        function updateFileList() {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+            
+            selectedFiles.forEach((file, index) => {
+                const li = document.createElement('li');
+                li.className = 'file-item';
+                li.innerHTML = `
+                    <span>${file.name} (${(file.size / 1024).toFixed(2)} KB)</span>
+                    <button type="button" class="file-item-remove" onclick="removeFile(${index})">Supprimer</button>
+                `;
+                fileList.appendChild(li);
+            });
+        }
+
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            updateFileList();
+        }
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message show';
+            errorDiv.textContent = message;
+            const content = document.querySelector('.content');
+            content.insertBefore(errorDiv, content.firstChild);
+            setTimeout(() => errorDiv.remove(), 5000);
+        }
+
+        function clearError() {
+            const errors = document.querySelectorAll('.error-message');
+            errors.forEach(e => e.remove());
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+
+            if (!validateSection(10)) {
+                return;
+            }
+
+            const formData = new FormData(document.getElementById('assessmentForm'));
+            
+            // Add checkbox values for motivation
+            const motivations = [];
+            document.querySelectorAll('input[name="motivation"]:checked').forEach(cb => {
+                motivations.push(cb.value);
+            });
+            formData.append('motivations', motivations.join(', '));
+
+            // Add commitments
+            const commitments = [];
+            document.querySelectorAll('input[name="commitment"]:checked').forEach(cb => {
+                commitments.push(cb.value);
+            });
+            formData.append('commitments', commitments.join(', '));
+
+            // Add files
+            selectedFiles.forEach(file => {
+                formData.append('files', file);
+            });
+
+            // Submit to FormSubmit
+            try {
+                const response = await fetch('https://formsubmit.co/abdoulahimail@yahoo.com', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    // Show success message
+                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                    document.getElementById('successMessage').classList.add('show');
+                    document.getElementById('assessmentForm').style.display = 'none';
+                    document.querySelector('.progress-container').style.display = 'none';
+                } else {
+                    showError('Une erreur est survenue lors de l\'envoi du formulaire.');
+                }
+            } catch (error) {
+                showError('Erreur de connexion. Veuillez vérifier votre connexion internet.');
+            }
+        }
+
+        // Initialize progress
+        updateProgress();
+    </script>
+</body>
+</html>
