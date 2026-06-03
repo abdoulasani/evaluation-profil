@@ -101,6 +101,17 @@
             }
         }
 
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
         .section-title {
             font-size: 1.6em;
             color: #0f3460;
@@ -269,6 +280,7 @@
             font-weight: normal;
             cursor: pointer;
             flex-grow: 1;
+            text-align: left;
         }
 
         .conditional-group {
@@ -377,6 +389,62 @@
             border: 2px solid #dc3545;
         }
 
+        .success-container {
+            display: none;
+            animation: scaleIn 0.6s ease;
+        }
+
+        .success-container.show {
+            display: block;
+        }
+
+        .success-card {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border: 3px solid #28a745;
+            border-radius: 15px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(40, 167, 69, 0.2);
+        }
+
+        .success-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: pulse 0.6s ease;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .success-title {
+            font-size: 2em;
+            color: #155724;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .success-message {
+            font-size: 1.05em;
+            color: #155724;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            white-space: pre-line;
+        }
+
+        .success-footer {
+            font-size: 0.95em;
+            color: #155724;
+            font-weight: 600;
+            padding-top: 20px;
+            border-top: 2px solid rgba(40, 167, 69, 0.3);
+        }
+
         .buttons {
             display: flex;
             gap: 15px;
@@ -420,32 +488,6 @@
 
         .btn-secondary:hover {
             background: #dee2e6;
-        }
-
-        .success-message {
-            display: none;
-            background: #d4edda;
-            border: 2px solid #28a745;
-            color: #155724;
-            padding: 30px;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 20px;
-            animation: slideIn 0.5s ease;
-        }
-
-        .success-message.show {
-            display: block;
-        }
-
-        .success-message h2 {
-            margin-bottom: 15px;
-            font-size: 1.5em;
-        }
-
-        .success-message p {
-            line-height: 1.8;
-            font-size: 0.95em;
         }
 
         .error-message {
@@ -518,6 +560,22 @@
             .summary-grid {
                 grid-template-columns: 1fr;
             }
+
+            .success-card {
+                padding: 40px 25px;
+            }
+
+            .success-title {
+                font-size: 1.5em;
+            }
+
+            .success-message {
+                font-size: 0.95em;
+            }
+
+            .success-icon {
+                font-size: 3em;
+            }
         }
     </style>
 </head>
@@ -528,7 +586,7 @@
             <p>Évaluation de votre projet d'immigration et de mobilité internationale</p>
         </div>
 
-        <div class="progress-container">
+        <div class="progress-container" id="progressContainer">
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
@@ -537,13 +595,28 @@
 
         <div class="content">
             <div id="errorMessage" class="error-message"></div>
-            <div id="successMessage" class="success-message">
-                <h2>✓ Merci pour votre confiance</h2>
-                <p>Votre formulaire a été transmis avec succès à Horizon Atlas.</p>
-                <p>Notre équipe analysera votre profil et vous contactera prochainement afin de vous accompagner dans votre projet.</p>
+
+            <!-- SUCCESS MESSAGE -->
+            <div id="successContainer" class="success-container">
+                <div class="success-card">
+                    <div class="success-icon">✅</div>
+                    <h2 class="success-title">Merci pour votre confiance</h2>
+                    <p class="success-message">Votre évaluation a été transmise avec succès à Horizon Atlas.
+
+Nos conseillers vont analyser votre profil et vérifier votre admissibilité au programme sélectionné.
+
+Un agent Horizon Atlas vous contactera prochainement afin de vous accompagner dans le démarrage de votre projet d'immigration, d'études, de travail ou de résidence à l'étranger.
+
+Veuillez rester joignable par téléphone, WhatsApp ou e-mail.</p>
+                    <div class="success-footer">À très bientôt,<br>L'équipe Horizon Atlas</div>
+                </div>
             </div>
 
-            <form id="assessmentForm">
+            <form id="assessmentForm" action="https://formsubmit.co/abdoulahimail@yahoo.com" method="POST">
+                <input type="hidden" name="_subject" value="Nouvelle évaluation d'immigration - Horizon Atlas">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="">
+
                 <!-- ÉTAPE 1: SÉLECTION DU PROGRAMME -->
                 <div class="form-section active" id="section-program">
                     <div class="section-title">📋 Sélectionnez votre programme</div>
@@ -597,7 +670,7 @@
                         <input type="text" id="fullName" name="fullName" required>
                     </div>
 
-                    <div class="form-group required" data-program="visa-travail-espagne">
+                    <div class="form-group required" id="age-group" style="display:none;">
                         <label for="age">Âge</label>
                         <input type="number" id="age" name="age" min="18" max="120">
                     </div>
@@ -622,7 +695,7 @@
                         <input type="email" id="email" name="email" required>
                     </div>
 
-                    <div class="form-group required" data-program="residence-dubai">
+                    <div class="form-group required" id="countryResidence-group" style="display:none;">
                         <label for="countryResidence">Pays de résidence actuelle</label>
                         <input type="text" id="countryResidence" name="countryResidence">
                     </div>
@@ -641,11 +714,11 @@
                         <label>Avez-vous un passeport valide ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="ve-passport-yes" name="ve_passport" value="yes" required>
+                                <input type="radio" id="ve-passport-yes" name="ve_passport" value="Oui" required>
                                 <label for="ve-passport-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="ve-passport-no" name="ve_passport" value="no">
+                                <input type="radio" id="ve-passport-no" name="ve_passport" value="Non">
                                 <label for="ve-passport-no">Non</label>
                             </div>
                         </div>
@@ -655,11 +728,11 @@
                         <label>Possédez-vous un acte de naissance ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="ve-birth-yes" name="ve_birthCert" value="yes" required>
+                                <input type="radio" id="ve-birth-yes" name="ve_birthCert" value="Oui" required>
                                 <label for="ve-birth-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="ve-birth-no" name="ve_birthCert" value="no">
+                                <input type="radio" id="ve-birth-no" name="ve_birthCert" value="Non">
                                 <label for="ve-birth-no">Non</label>
                             </div>
                         </div>
@@ -669,11 +742,11 @@
                         <label>Possédez-vous votre Baccalauréat ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="ve-bac-yes" name="ve_bachelor" value="yes" required>
+                                <input type="radio" id="ve-bac-yes" name="ve_bachelor" value="Oui" required>
                                 <label for="ve-bac-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="ve-bac-no" name="ve_bachelor" value="no">
+                                <input type="radio" id="ve-bac-no" name="ve_bachelor" value="Non">
                                 <label for="ve-bac-no">Non</label>
                             </div>
                         </div>
@@ -683,11 +756,11 @@
                         <label>Disposez-vous des relevés de notes du Baccalauréat ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="ve-bacnotes-yes" name="ve_bacNotes" value="yes" required>
+                                <input type="radio" id="ve-bacnotes-yes" name="ve_bacNotes" value="Oui" required>
                                 <label for="ve-bacnotes-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="ve-bacnotes-no" name="ve_bacNotes" value="no">
+                                <input type="radio" id="ve-bacnotes-no" name="ve_bacNotes" value="Non">
                                 <label for="ve-bacnotes-no">Non</label>
                             </div>
                         </div>
@@ -697,11 +770,11 @@
                         <label>Disposez-vous de vos bulletins scolaires récents ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="ve-schoolrecords-yes" name="ve_schoolRecords" value="yes" required>
+                                <input type="radio" id="ve-schoolrecords-yes" name="ve_schoolRecords" value="Oui" required>
                                 <label for="ve-schoolrecords-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="ve-schoolrecords-no" name="ve_schoolRecords" value="no">
+                                <input type="radio" id="ve-schoolrecords-no" name="ve_schoolRecords" value="Non">
                                 <label for="ve-schoolrecords-no">Non</label>
                             </div>
                         </div>
@@ -711,11 +784,11 @@
                         <label>Possédez-vous un certificat de résidence ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="ve-residence-yes" name="ve_residenceCert" value="yes" required>
+                                <input type="radio" id="ve-residence-yes" name="ve_residenceCert" value="Oui" required>
                                 <label for="ve-residence-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="ve-residence-no" name="ve_residenceCert" value="no">
+                                <input type="radio" id="ve-residence-no" name="ve_residenceCert" value="Non">
                                 <label for="ve-residence-no">Non</label>
                             </div>
                         </div>
@@ -725,11 +798,11 @@
                         <label>Pouvez-vous obtenir un casier judiciaire ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="ve-criminal-yes" name="ve_criminalRecord" value="yes" required>
+                                <input type="radio" id="ve-criminal-yes" name="ve_criminalRecord" value="Oui" required>
                                 <label for="ve-criminal-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="ve-criminal-no" name="ve_criminalRecord" value="no">
+                                <input type="radio" id="ve-criminal-no" name="ve_criminalRecord" value="Non">
                                 <label for="ve-criminal-no">Non</label>
                             </div>
                         </div>
@@ -739,11 +812,11 @@
                         <label>Pouvez-vous obtenir un certificat médical ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="ve-medical-yes" name="ve_medicalCert" value="yes" required>
+                                <input type="radio" id="ve-medical-yes" name="ve_medicalCert" value="Oui" required>
                                 <label for="ve-medical-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="ve-medical-no" name="ve_medicalCert" value="no">
+                                <input type="radio" id="ve-medical-no" name="ve_medicalCert" value="Non">
                                 <label for="ve-medical-no">Non</label>
                             </div>
                         </div>
@@ -753,11 +826,11 @@
                         <label>Disposez-vous d'un garant financier ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="ve-guarantor-yes" name="ve_hasGuarantor" value="yes" required onchange="toggleGuarantorSection('ve')">
+                                <input type="radio" id="ve-guarantor-yes" name="ve_hasGuarantor" value="Oui" required onchange="toggleGuarantorSection('ve')">
                                 <label for="ve-guarantor-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="ve-guarantor-no" name="ve_hasGuarantor" value="no" onchange="toggleGuarantorSection('ve')">
+                                <input type="radio" id="ve-guarantor-no" name="ve_hasGuarantor" value="Non" onchange="toggleGuarantorSection('ve')">
                                 <label for="ve-guarantor-no">Non</label>
                             </div>
                         </div>
@@ -772,11 +845,11 @@
                             <label>NIF ?</label>
                             <div class="radio-group">
                                 <div class="radio-item">
-                                    <input type="radio" id="ve-nif-yes" name="ve_guarantorNif" value="yes">
+                                    <input type="radio" id="ve-nif-yes" name="ve_guarantorNif" value="Oui">
                                     <label for="ve-nif-yes">Oui</label>
                                 </div>
                                 <div class="radio-item">
-                                    <input type="radio" id="ve-nif-no" name="ve_guarantorNif" value="no">
+                                    <input type="radio" id="ve-nif-no" name="ve_guarantorNif" value="Non">
                                     <label for="ve-nif-no">Non</label>
                                 </div>
                             </div>
@@ -786,11 +859,11 @@
                             <label>RCCM ?</label>
                             <div class="radio-group">
                                 <div class="radio-item">
-                                    <input type="radio" id="ve-rccm-yes" name="ve_guarantorRccm" value="yes">
+                                    <input type="radio" id="ve-rccm-yes" name="ve_guarantorRccm" value="Oui">
                                     <label for="ve-rccm-yes">Oui</label>
                                 </div>
                                 <div class="radio-item">
-                                    <input type="radio" id="ve-rccm-no" name="ve_guarantorRccm" value="no">
+                                    <input type="radio" id="ve-rccm-no" name="ve_guarantorRccm" value="Non">
                                     <label for="ve-rccm-no">Non</label>
                                 </div>
                             </div>
@@ -800,11 +873,11 @@
                             <label>ARF ?</label>
                             <div class="radio-group">
                                 <div class="radio-item">
-                                    <input type="radio" id="ve-arf-yes" name="ve_guarantorArf" value="yes">
+                                    <input type="radio" id="ve-arf-yes" name="ve_guarantorArf" value="Oui">
                                     <label for="ve-arf-yes">Oui</label>
                                 </div>
                                 <div class="radio-item">
-                                    <input type="radio" id="ve-arf-no" name="ve_guarantorArf" value="no">
+                                    <input type="radio" id="ve-arf-no" name="ve_guarantorArf" value="Non">
                                     <label for="ve-arf-no">Non</label>
                                 </div>
                             </div>
@@ -814,11 +887,11 @@
                             <label>Relevé bancaire ?</label>
                             <div class="radio-group">
                                 <div class="radio-item">
-                                    <input type="radio" id="ve-bank-yes" name="ve_guarantorBankStatement" value="yes">
+                                    <input type="radio" id="ve-bank-yes" name="ve_guarantorBankStatement" value="Oui">
                                     <label for="ve-bank-yes">Oui</label>
                                 </div>
                                 <div class="radio-item">
-                                    <input type="radio" id="ve-bank-no" name="ve_guarantorBankStatement" value="no">
+                                    <input type="radio" id="ve-bank-no" name="ve_guarantorBankStatement" value="Non">
                                     <label for="ve-bank-no">Non</label>
                                 </div>
                             </div>
@@ -828,11 +901,11 @@
                             <label>Pièce d'identité ?</label>
                             <div class="radio-group">
                                 <div class="radio-item">
-                                    <input type="radio" id="ve-id-yes" name="ve_guarantorId" value="yes">
+                                    <input type="radio" id="ve-id-yes" name="ve_guarantorId" value="Oui">
                                     <label for="ve-id-yes">Oui</label>
                                 </div>
                                 <div class="radio-item">
-                                    <input type="radio" id="ve-id-no" name="ve_guarantorId" value="no">
+                                    <input type="radio" id="ve-id-no" name="ve_guarantorId" value="Non">
                                     <label for="ve-id-no">Non</label>
                                 </div>
                             </div>
@@ -842,11 +915,11 @@
                             <label>Documents de propriété ?</label>
                             <div class="radio-group">
                                 <div class="radio-item">
-                                    <input type="radio" id="ve-property-yes" name="ve_guarantorProperty" value="yes">
+                                    <input type="radio" id="ve-property-yes" name="ve_guarantorProperty" value="Oui">
                                     <label for="ve-property-yes">Oui</label>
                                 </div>
                                 <div class="radio-item">
-                                    <input type="radio" id="ve-property-no" name="ve_guarantorProperty" value="no">
+                                    <input type="radio" id="ve-property-no" name="ve_guarantorProperty" value="Non">
                                     <label for="ve-property-no">Non</label>
                                 </div>
                             </div>
@@ -857,19 +930,19 @@
                         <label>Quel budget pouvez-vous mobiliser actuellement ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="ve-budget1" name="ve_budget" value="moins-1m" required>
+                                <input type="radio" id="ve-budget1" name="ve_budget" value="Moins de 1 000 000 FCFA" required>
                                 <label for="ve-budget1">Moins de 1 000 000 FCFA</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="ve-budget2" name="ve_budget" value="1m-2m">
+                                <input type="radio" id="ve-budget2" name="ve_budget" value="Entre 1 000 000 et 2 000 000 FCFA">
                                 <label for="ve-budget2">Entre 1 000 000 et 2 000 000 FCFA</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="ve-budget3" name="ve_budget" value="2m-4m">
+                                <input type="radio" id="ve-budget3" name="ve_budget" value="Entre 2 000 000 et 4 000 000 FCFA">
                                 <label for="ve-budget3">Entre 2 000 000 et 4 000 000 FCFA</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="ve-budget4" name="ve_budget" value="plus-4m">
+                                <input type="radio" id="ve-budget4" name="ve_budget" value="Plus de 4 000 000 FCFA">
                                 <label for="ve-budget4">Plus de 4 000 000 FCFA</label>
                             </div>
                         </div>
@@ -887,7 +960,7 @@
 
                     <div class="form-group required">
                         <label for="vte-education">Niveau d'études</label>
-                        <input type="text" id="vte-education" name="vte_education" placeholder="Ex: Licence, Master, Baccalauréat...">
+                        <input type="text" id="vte-education" name="vte_education" placeholder="Ex: Licence, Master, Baccalauréat..." required>
                     </div>
 
                     <div class="form-group required">
@@ -904,11 +977,11 @@
                         <label>Parlez-vous espagnol ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vte-spanish-yes" name="vte_spanish" value="yes" required>
+                                <input type="radio" id="vte-spanish-yes" name="vte_spanish" value="Oui" required>
                                 <label for="vte-spanish-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vte-spanish-no" name="vte_spanish" value="no">
+                                <input type="radio" id="vte-spanish-no" name="vte_spanish" value="Non">
                                 <label for="vte-spanish-no">Non</label>
                             </div>
                         </div>
@@ -918,11 +991,11 @@
                         <label>Parlez-vous anglais ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vte-english-yes" name="vte_english" value="yes" required>
+                                <input type="radio" id="vte-english-yes" name="vte_english" value="Oui" required>
                                 <label for="vte-english-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vte-english-no" name="vte_english" value="no">
+                                <input type="radio" id="vte-english-no" name="vte_english" value="Non">
                                 <label for="vte-english-no">Non</label>
                             </div>
                         </div>
@@ -932,11 +1005,11 @@
                         <label>Possédez-vous un passeport valide ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vte-passport-yes" name="vte_passport" value="yes" required>
+                                <input type="radio" id="vte-passport-yes" name="vte_passport" value="Oui" required>
                                 <label for="vte-passport-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vte-passport-no" name="vte_passport" value="no">
+                                <input type="radio" id="vte-passport-no" name="vte_passport" value="Non">
                                 <label for="vte-passport-no">Non</label>
                             </div>
                         </div>
@@ -946,11 +1019,11 @@
                         <label>Avez-vous déjà travaillé à l'étranger ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vte-abroad-yes" name="vte_abroadWork" value="yes" required>
+                                <input type="radio" id="vte-abroad-yes" name="vte_abroadWork" value="Oui" required>
                                 <label for="vte-abroad-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vte-abroad-no" name="vte_abroadWork" value="no">
+                                <input type="radio" id="vte-abroad-no" name="vte_abroadWork" value="Non">
                                 <label for="vte-abroad-no">Non</label>
                             </div>
                         </div>
@@ -960,11 +1033,11 @@
                         <label>Possédez-vous un CV professionnel ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vte-cv-yes" name="vte_cv" value="yes" required>
+                                <input type="radio" id="vte-cv-yes" name="vte_cv" value="Oui" required>
                                 <label for="vte-cv-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vte-cv-no" name="vte_cv" value="no">
+                                <input type="radio" id="vte-cv-no" name="vte_cv" value="Non">
                                 <label for="vte-cv-no">Non</label>
                             </div>
                         </div>
@@ -974,11 +1047,11 @@
                         <label>Pouvez-vous financer votre procédure ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vte-finance-yes" name="vte_canFinance" value="yes" required onchange="toggleBudgetSection('vte')">
+                                <input type="radio" id="vte-finance-yes" name="vte_canFinance" value="Oui" required onchange="toggleBudgetSection('vte')">
                                 <label for="vte-finance-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vte-finance-no" name="vte_canFinance" value="no" onchange="toggleBudgetSection('vte')">
+                                <input type="radio" id="vte-finance-no" name="vte_canFinance" value="Non" onchange="toggleBudgetSection('vte')">
                                 <label for="vte-finance-no">Non</label>
                             </div>
                         </div>
@@ -989,15 +1062,15 @@
                             <label>Budget disponible :</label>
                             <div class="radio-group">
                                 <div class="radio-item">
-                                    <input type="radio" id="vte-budgetopt1" name="vte_budget" value="moins-1m">
+                                    <input type="radio" id="vte-budgetopt1" name="vte_budget" value="Moins de 1 000 000 FCFA">
                                     <label for="vte-budgetopt1">Moins de 1 000 000 FCFA</label>
                                 </div>
                                 <div class="radio-item">
-                                    <input type="radio" id="vte-budgetopt2" name="vte_budget" value="1m-2m">
+                                    <input type="radio" id="vte-budgetopt2" name="vte_budget" value="Entre 1 000 000 et 2 000 000 FCFA">
                                     <label for="vte-budgetopt2">Entre 1 000 000 et 2 000 000 FCFA</label>
                                 </div>
                                 <div class="radio-item">
-                                    <input type="radio" id="vte-budgetopt3" name="vte_budget" value="plus-2m">
+                                    <input type="radio" id="vte-budgetopt3" name="vte_budget" value="Plus de 2 000 000 FCFA">
                                     <label for="vte-budgetopt3">Plus de 2 000 000 FCFA</label>
                                 </div>
                             </div>
@@ -1033,11 +1106,11 @@
                         <label>Avez-vous déjà voyagé à l'étranger ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vc-travel-yes" name="vc_hasTraveled" value="yes" required onchange="toggleTravelInfo('vc')">
+                                <input type="radio" id="vc-travel-yes" name="vc_hasTraveled" value="Oui" required onchange="toggleTravelInfo('vc')">
                                 <label for="vc-travel-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vc-travel-no" name="vc_hasTraveled" value="no" onchange="toggleTravelInfo('vc')">
+                                <input type="radio" id="vc-travel-no" name="vc_hasTraveled" value="Non" onchange="toggleTravelInfo('vc')">
                                 <label for="vc-travel-no">Non</label>
                             </div>
                         </div>
@@ -1054,11 +1127,11 @@
                         <label>Avez-vous déjà obtenu un visa ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vc-hasvisa-yes" name="vc_hasVisa" value="yes" required>
+                                <input type="radio" id="vc-hasvisa-yes" name="vc_hasVisa" value="Oui" required>
                                 <label for="vc-hasvisa-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vc-hasvisa-no" name="vc_hasVisa" value="no">
+                                <input type="radio" id="vc-hasvisa-no" name="vc_hasVisa" value="Non">
                                 <label for="vc-hasvisa-no">Non</label>
                             </div>
                         </div>
@@ -1068,11 +1141,11 @@
                         <label>Avez-vous déjà reçu un refus de visa ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vc-refusal-yes" name="vc_hasRefusal" value="yes" required>
+                                <input type="radio" id="vc-refusal-yes" name="vc_hasRefusal" value="Oui" required>
                                 <label for="vc-refusal-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vc-refusal-no" name="vc_hasRefusal" value="no">
+                                <input type="radio" id="vc-refusal-no" name="vc_hasRefusal" value="Non">
                                 <label for="vc-refusal-no">Non</label>
                             </div>
                         </div>
@@ -1082,19 +1155,19 @@
                         <label>Quel budget pouvez-vous consacrer à votre voyage ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vc-budget1" name="vc_budget" value="moins-1m" required>
+                                <input type="radio" id="vc-budget1" name="vc_budget" value="Moins de 1 000 000 FCFA" required>
                                 <label for="vc-budget1">Moins de 1 000 000 FCFA</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vc-budget2" name="vc_budget" value="1m-2.5m">
+                                <input type="radio" id="vc-budget2" name="vc_budget" value="Entre 1 000 000 et 2 500 000 FCFA">
                                 <label for="vc-budget2">Entre 1 000 000 et 2 500 000 FCFA</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vc-budget3" name="vc_budget" value="2.5m-5m">
+                                <input type="radio" id="vc-budget3" name="vc_budget" value="Entre 2 500 000 et 5 000 000 FCFA">
                                 <label for="vc-budget3">Entre 2 500 000 et 5 000 000 FCFA</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vc-budget4" name="vc_budget" value="plus-5m">
+                                <input type="radio" id="vc-budget4" name="vc_budget" value="Plus de 5 000 000 FCFA">
                                 <label for="vc-budget4">Plus de 5 000 000 FCFA</label>
                             </div>
                         </div>
@@ -1104,11 +1177,11 @@
                         <label>Possédez-vous un passeport valide ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vc-passport-yes" name="vc_passport" value="yes" required>
+                                <input type="radio" id="vc-passport-yes" name="vc_passport" value="Oui" required>
                                 <label for="vc-passport-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vc-passport-no" name="vc_passport" value="no">
+                                <input type="radio" id="vc-passport-no" name="vc_passport" value="Non">
                                 <label for="vc-passport-no">Non</label>
                             </div>
                         </div>
@@ -1118,11 +1191,11 @@
                         <label>Possédez-vous un relevé bancaire ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vc-bank-yes" name="vc_bankStatement" value="yes" required>
+                                <input type="radio" id="vc-bank-yes" name="vc_bankStatement" value="Oui" required>
                                 <label for="vc-bank-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vc-bank-no" name="vc_bankStatement" value="no">
+                                <input type="radio" id="vc-bank-no" name="vc_bankStatement" value="Non">
                                 <label for="vc-bank-no">Non</label>
                             </div>
                         </div>
@@ -1147,11 +1220,11 @@
                         <label>Parlez-vous anglais ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vtk-english-yes" name="vtk_english" value="yes" required>
+                                <input type="radio" id="vtk-english-yes" name="vtk_english" value="Oui" required>
                                 <label for="vtk-english-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vtk-english-no" name="vtk_english" value="no">
+                                <input type="radio" id="vtk-english-no" name="vtk_english" value="Non">
                                 <label for="vtk-english-no">Non</label>
                             </div>
                         </div>
@@ -1161,11 +1234,11 @@
                         <label>Parlez-vous arabe ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vtk-arabic-yes" name="vtk_arabic" value="yes" required>
+                                <input type="radio" id="vtk-arabic-yes" name="vtk_arabic" value="Oui" required>
                                 <label for="vtk-arabic-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vtk-arabic-no" name="vtk_arabic" value="no">
+                                <input type="radio" id="vtk-arabic-no" name="vtk_arabic" value="Non">
                                 <label for="vtk-arabic-no">Non</label>
                             </div>
                         </div>
@@ -1175,11 +1248,11 @@
                         <label>Possédez-vous un permis de conduire ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vtk-license-yes" name="vtk_license" value="yes" required>
+                                <input type="radio" id="vtk-license-yes" name="vtk_license" value="Oui" required>
                                 <label for="vtk-license-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vtk-license-no" name="vtk_license" value="no">
+                                <input type="radio" id="vtk-license-no" name="vtk_license" value="Non">
                                 <label for="vtk-license-no">Non</label>
                             </div>
                         </div>
@@ -1189,11 +1262,11 @@
                         <label>Avez-vous déjà travaillé à l'étranger ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vtk-abroad-yes" name="vtk_abroadWork" value="yes" required>
+                                <input type="radio" id="vtk-abroad-yes" name="vtk_abroadWork" value="Oui" required>
                                 <label for="vtk-abroad-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vtk-abroad-no" name="vtk_abroadWork" value="no">
+                                <input type="radio" id="vtk-abroad-no" name="vtk_abroadWork" value="Non">
                                 <label for="vtk-abroad-no">Non</label>
                             </div>
                         </div>
@@ -1203,11 +1276,11 @@
                         <label>Avez-vous un passeport valide ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vtk-passport-yes" name="vtk_passport" value="yes" required>
+                                <input type="radio" id="vtk-passport-yes" name="vtk_passport" value="Oui" required>
                                 <label for="vtk-passport-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vtk-passport-no" name="vtk_passport" value="no">
+                                <input type="radio" id="vtk-passport-no" name="vtk_passport" value="Non">
                                 <label for="vtk-passport-no">Non</label>
                             </div>
                         </div>
@@ -1217,11 +1290,11 @@
                         <label>Pouvez-vous mobiliser un budget compris entre 850 000 FCFA et 1 500 000 FCFA ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vtk-budget-yes" name="vtk_canBudget" value="yes" required onchange="toggleBudgetAlt('vtk')">
+                                <input type="radio" id="vtk-budget-yes" name="vtk_canBudget" value="Oui" required onchange="toggleBudgetAlt('vtk')">
                                 <label for="vtk-budget-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="vtk-budget-no" name="vtk_canBudget" value="no" onchange="toggleBudgetAlt('vtk')">
+                                <input type="radio" id="vtk-budget-no" name="vtk_canBudget" value="Non" onchange="toggleBudgetAlt('vtk')">
                                 <label for="vtk-budget-no">Non</label>
                             </div>
                         </div>
@@ -1253,11 +1326,11 @@
                         <label>Possédez-vous un passeport valide ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="rd-passport-yes" name="rd_passport" value="yes" required>
+                                <input type="radio" id="rd-passport-yes" name="rd_passport" value="Oui" required>
                                 <label for="rd-passport-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="rd-passport-no" name="rd_passport" value="no">
+                                <input type="radio" id="rd-passport-no" name="rd_passport" value="Non">
                                 <label for="rd-passport-no">Non</label>
                             </div>
                         </div>
@@ -1267,11 +1340,11 @@
                         <label>Pouvez-vous mobiliser un budget compris entre 1 500 000 FCFA et 2 000 000 FCFA ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="rd-budget-yes" name="rd_canBudget" value="yes" required onchange="toggleBudgetAlt('rd')">
+                                <input type="radio" id="rd-budget-yes" name="rd_canBudget" value="Oui" required onchange="toggleBudgetAlt('rd')">
                                 <label for="rd-budget-yes">Oui</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="rd-budget-no" name="rd_canBudget" value="no" onchange="toggleBudgetAlt('rd')">
+                                <input type="radio" id="rd-budget-no" name="rd_canBudget" value="Non" onchange="toggleBudgetAlt('rd')">
                                 <label for="rd-budget-no">Non</label>
                             </div>
                         </div>
@@ -1286,18 +1359,7 @@
 
                     <div class="buttons">
                         <button type="button" class="btn-secondary" onclick="previousStep()">Retour</button>
-                        <button type="button" class="btn-primary" onclick="nextStep()">Continuer</button>
-                    </div>
-                </div>
-
-                <!-- RÉSUMÉ DU PROFIL -->
-                <div class="form-section" id="section-summary">
-                    <div class="section-title">📊 Résumé de Votre Profil</div>
-                    <div id="profileSummary" class="profile-summary"></div>
-
-                    <div class="buttons">
-                        <button type="button" class="btn-secondary" onclick="previousStep()">Retour</button>
-                        <button type="submit" class="btn-primary">Soumettre le Formulaire</button>
+                        <button type="button" class="btn-primary" onclick="submitForm()">Soumettre</button>
                     </div>
                 </div>
             </form>
@@ -1320,8 +1382,6 @@
                     document.getElementById('startBtn').disabled = false;
                 });
             });
-
-            document.getElementById('assessmentForm').addEventListener('submit', handleFormSubmit);
         });
 
         function startAssessment() {
@@ -1330,10 +1390,27 @@
                 return;
             }
 
+            // Show age field for Visa Travail Espagne
+            if (selectedProgram === 'visa-travail-espagne') {
+                document.getElementById('age-group').style.display = 'block';
+                document.getElementById('age').required = true;
+            } else {
+                document.getElementById('age-group').style.display = 'none';
+                document.getElementById('age').required = false;
+            }
+
+            // Show country residence for Résidence Dubaï
+            if (selectedProgram === 'residence-dubai') {
+                document.getElementById('countryResidence-group').style.display = 'block';
+                document.getElementById('countryResidence').required = true;
+            } else {
+                document.getElementById('countryResidence-group').style.display = 'none';
+                document.getElementById('countryResidence').required = false;
+            }
+
             steps.length = 0;
             steps.push('section-personal');
             steps.push(`section-${selectedProgram}`);
-            steps.push('section-summary');
 
             currentStep = 0;
             showStep(currentStep);
@@ -1369,10 +1446,7 @@
                 return;
             }
 
-            if (currentStep === steps.length - 1) {
-                generateProfileSummary();
-                showStep(currentStep);
-            } else {
+            if (currentStep < steps.length - 1) {
                 currentStep++;
                 showStep(currentStep);
             }
@@ -1410,7 +1484,7 @@
 
         function updateProgress() {
             if (steps.length > 0) {
-                const progress = ((currentStep + 1) / (steps.length + 1)) * 100;
+                const progress = ((currentStep + 1) / steps.length) * 100;
                 document.getElementById('progressFill').style.width = progress + '%';
                 document.getElementById('progressText').textContent = `Étape ${currentStep + 1} sur ${steps.length}`;
             }
@@ -1419,7 +1493,7 @@
         function toggleGuarantorSection(prefix) {
             const hasGuarantor = document.querySelector(`input[name="${prefix}_hasGuarantor"]:checked`);
             const section = document.getElementById(`${prefix}-guarantor-section`);
-            if (hasGuarantor && hasGuarantor.value === 'yes') {
+            if (hasGuarantor && hasGuarantor.value === 'Oui') {
                 section.classList.add('visible');
             } else {
                 section.classList.remove('visible');
@@ -1429,7 +1503,7 @@
         function toggleBudgetSection(prefix) {
             const canFinance = document.querySelector(`input[name="${prefix}_canFinance"]:checked`);
             const section = document.getElementById(`${prefix}-budget-section`);
-            if (canFinance && canFinance.value === 'yes') {
+            if (canFinance && canFinance.value === 'Oui') {
                 section.classList.add('visible');
             } else {
                 section.classList.remove('visible');
@@ -1439,7 +1513,7 @@
         function toggleBudgetAlt(prefix) {
             const hasBudget = document.querySelector(`input[name="${prefix}_canBudget"]:checked`);
             const section = document.getElementById(`${prefix}-budget-section`);
-            if (hasBudget && hasBudget.value === 'no') {
+            if (hasBudget && hasBudget.value === 'Non') {
                 section.classList.add('visible');
             } else {
                 section.classList.remove('visible');
@@ -1449,105 +1523,11 @@
         function toggleTravelInfo(prefix) {
             const hasTraveled = document.querySelector(`input[name="${prefix}_hasTraveled"]:checked`);
             const section = document.getElementById(`${prefix}-countries-section`);
-            if (hasTraveled && hasTraveled.value === 'yes') {
+            if (hasTraveled && hasTraveled.value === 'Oui') {
                 section.classList.add('visible');
             } else {
                 section.classList.remove('visible');
             }
-        }
-
-        function generateProfileSummary() {
-            const form = document.getElementById('assessmentForm');
-            const formData = new FormData(form);
-            const fullName = formData.get('fullName');
-            const email = formData.get('email');
-            const phone = formData.get('phone');
-
-            // Count completed fields
-            let completedFields = 0;
-            let totalFields = 0;
-
-            const allInputs = document.querySelector(`#section-${selectedProgram}`).querySelectorAll('[required]');
-            totalFields = allInputs.length;
-
-            allInputs.forEach(input => {
-                if (input.type === 'radio' || input.type === 'checkbox') {
-                    if (input.checked) completedFields++;
-                } else if (input.value) {
-                    completedFields++;
-                }
-            });
-
-            // Calculate readiness level
-            const percentage = (completedFields / totalFields) * 100;
-            let readinessLevel = 'Insuffisant';
-            let readinessClass = 'readiness-insufficient';
-
-            if (percentage >= 90) {
-                readinessLevel = 'Excellent';
-                readinessClass = 'readiness-excellent';
-            } else if (percentage >= 75) {
-                readinessLevel = 'Bon';
-                readinessClass = 'readiness-good';
-            } else if (percentage >= 60) {
-                readinessLevel = 'Moyen';
-                readinessClass = 'readiness-medium';
-            }
-
-            // Get program display name
-            const programNames = {
-                'visa-etudes-espagne': '🎓 Visa Études Espagne',
-                'visa-travail-espagne': '💼 Visa Travail Espagne',
-                'visa-visiteur-canada': '✈️ Visa Visiteur Canada',
-                'visa-travail-koweit': '🏢 Visa Travail Koweït',
-                'residence-dubai': '🏙️ Résidence Dubaï'
-            };
-
-            // Get budget information
-            let budget = 'Non spécifié';
-            const budgetInputs = document.querySelectorAll(`[name*="_budget"]:checked, [name*="_budgetAmount"]`);
-            budgetInputs.forEach(input => {
-                if (input.value && input.value !== 'yes' && input.value !== 'no') {
-                    budget = input.value;
-                }
-            });
-
-            // Build summary
-            let summaryHTML = `
-                <div class="summary-grid">
-                    <div class="summary-item">
-                        <div class="summary-label">Programme Choisi</div>
-                        <div class="summary-value">${programNames[selectedProgram] || selectedProgram}</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-label">Nom Complet</div>
-                        <div class="summary-value">${fullName || 'Non fourni'}</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-label">Email</div>
-                        <div class="summary-value">${email || 'Non fourni'}</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-label">Téléphone</div>
-                        <div class="summary-value">${phone || 'Non fourni'}</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-label">Budget Disponible</div>
-                        <div class="summary-value">${budget}</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-label">Complétude du Profil</div>
-                        <div class="summary-value">${completedFields}/${totalFields} champs</div>
-                    </div>
-                </div>
-                <div style="text-align: center; margin-top: 20px;">
-                    <div class="readiness-badge ${readinessClass}">
-                        Niveau de Préparation: ${readinessLevel}
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('profileSummary').innerHTML = summaryHTML;
         }
 
         function showError(message) {
@@ -1562,32 +1542,22 @@
             errorDiv.classList.remove('show');
         }
 
-        async function handleFormSubmit(e) {
-            e.preventDefault();
+        function submitForm() {
+            if (!validateCurrentStep()) {
+                return;
+            }
 
             const form = document.getElementById('assessmentForm');
-            const formData = new FormData(form);
-
-            // Convert FormData to object
-            const data = Object.fromEntries(formData);
-
-            try {
-                const response = await fetch('https://formsubmit.co/abdoulahimail@yahoo.com', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.ok) {
-                    document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
-                    document.getElementById('successMessage').classList.add('show');
-                    form.style.display = 'none';
-                    document.querySelector('.progress-container').style.display = 'none';
-                } else {
-                    showError('Une erreur est survenue lors de l\'envoi du formulaire.');
-                }
-            } catch (error) {
-                showError('Erreur de connexion. Veuillez vérifier votre connexion internet.');
-            }
+            
+            // Show success message
+            document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('successContainer').classList.add('show');
+            document.getElementById('progressContainer').style.display = 'none';
+            
+            // Submit form to FormSubmit after showing success
+            setTimeout(() => {
+                form.submit();
+            }, 1000);
         }
     </script>
 </body>
