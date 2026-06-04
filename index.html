@@ -101,17 +101,6 @@
             }
         }
 
-        @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
         .section-title {
             font-size: 1.6em;
             color: #0f3460;
@@ -309,142 +298,6 @@
             }
         }
 
-        .profile-summary {
-            background: linear-gradient(135deg, #f0f7ff 0%, #e8f3ff 100%);
-            border: 2px solid #1a5490;
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 30px;
-            display: none;
-        }
-
-        .profile-summary.visible {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .summary-title {
-            font-size: 1.5em;
-            color: #0f3460;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .summary-item {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #1a5490;
-        }
-
-        .summary-label {
-            font-size: 0.85em;
-            color: #666;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .summary-value {
-            font-size: 1.1em;
-            color: #0f3460;
-            font-weight: 700;
-        }
-
-        .readiness-badge {
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: 700;
-            margin-top: 15px;
-        }
-
-        .readiness-excellent {
-            background: #d4edda;
-            color: #155724;
-            border: 2px solid #28a745;
-        }
-
-        .readiness-good {
-            background: #cfe2ff;
-            color: #084298;
-            border: 2px solid #0d6efd;
-        }
-
-        .readiness-medium {
-            background: #fff3cd;
-            color: #664d03;
-            border: 2px solid #ffc107;
-        }
-
-        .readiness-insufficient {
-            background: #f8d7da;
-            color: #842029;
-            border: 2px solid #dc3545;
-        }
-
-        .success-container {
-            display: none;
-            animation: scaleIn 0.6s ease;
-        }
-
-        .success-container.show {
-            display: block;
-        }
-
-        .success-card {
-            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-            border: 3px solid #28a745;
-            border-radius: 15px;
-            padding: 50px 40px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(40, 167, 69, 0.2);
-        }
-
-        .success-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-            animation: pulse 0.6s ease;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-        }
-
-        .success-title {
-            font-size: 2em;
-            color: #155724;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .success-message {
-            font-size: 1.05em;
-            color: #155724;
-            line-height: 1.8;
-            margin-bottom: 30px;
-            white-space: pre-line;
-        }
-
-        .success-footer {
-            font-size: 0.95em;
-            color: #155724;
-            font-weight: 600;
-            padding-top: 20px;
-            border-top: 2px solid rgba(40, 167, 69, 0.3);
-        }
-
         .buttons {
             display: flex;
             gap: 15px;
@@ -516,10 +369,6 @@
             }
         }
 
-        .hidden {
-            display: none !important;
-        }
-
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.8em;
@@ -556,26 +405,6 @@
             .conditional-group {
                 margin-left: 0;
             }
-
-            .summary-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .success-card {
-                padding: 40px 25px;
-            }
-
-            .success-title {
-                font-size: 1.5em;
-            }
-
-            .success-message {
-                font-size: 0.95em;
-            }
-
-            .success-icon {
-                font-size: 3em;
-            }
         }
     </style>
 </head>
@@ -596,26 +425,11 @@
         <div class="content">
             <div id="errorMessage" class="error-message"></div>
 
-            <!-- SUCCESS MESSAGE -->
-            <div id="successContainer" class="success-container">
-                <div class="success-card">
-                    <div class="success-icon">✅</div>
-                    <h2 class="success-title">Merci pour votre confiance</h2>
-                    <p class="success-message">Votre évaluation a été transmise avec succès à Horizon Atlas.
-
-Nos conseillers vont analyser votre profil et vérifier votre admissibilité au programme sélectionné.
-
-Un agent Horizon Atlas vous contactera prochainement afin de vous accompagner dans le démarrage de votre projet d'immigration, d'études, de travail ou de résidence à l'étranger.
-
-Veuillez rester joignable par téléphone, WhatsApp ou e-mail.</p>
-                    <div class="success-footer">À très bientôt,<br>L'équipe Horizon Atlas</div>
-                </div>
-            </div>
-
-            <form id="assessmentForm" action="https://formsubmit.co/abdoulahimail@yahoo.com" method="POST">
+            <form id="assessmentForm" method="POST" action="https://formsubmit.co/abdoulahimail@yahoo.com">
                 <input type="hidden" name="_subject" value="Nouvelle évaluation d'immigration - Horizon Atlas">
                 <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value="">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_next" id="nextUrl" value="">
 
                 <!-- ÉTAPE 1: SÉLECTION DU PROGRAMME -->
                 <div class="form-section active" id="section-program">
@@ -653,7 +467,7 @@ Veuillez rester joignable par téléphone, WhatsApp ou e-mail.</p>
                                 <div class="card-title">Résidence Dubaï</div>
                             </div>
                         </div>
-                        <input type="hidden" id="selectedProgram" name="program" required>
+                        <input type="hidden" id="selectedProgram" name="Programme_sélectionné">
                     </div>
 
                     <div class="buttons">
@@ -661,43 +475,43 @@ Veuillez rester joignable par téléphone, WhatsApp ou e-mail.</p>
                     </div>
                 </div>
 
-                <!-- ÉTAPE 2: INFORMATIONS PERSONNELLES (Commune à tous) -->
+                <!-- ÉTAPE 2: INFORMATIONS PERSONNELLES -->
                 <div class="form-section" id="section-personal">
                     <div class="section-title">👤 Informations Personnelles</div>
 
                     <div class="form-group required">
                         <label for="fullName">Nom complet</label>
-                        <input type="text" id="fullName" name="fullName" required>
+                        <input type="text" id="fullName" name="Nom_complet" required>
                     </div>
 
                     <div class="form-group required" id="age-group" style="display:none;">
                         <label for="age">Âge</label>
-                        <input type="number" id="age" name="age" min="18" max="120">
+                        <input type="number" id="age" name="Age" min="18" max="120">
                     </div>
 
                     <div class="form-group required">
                         <label for="birthDate">Date de naissance</label>
-                        <input type="date" id="birthDate" name="birthDate" required>
+                        <input type="date" id="birthDate" name="Date_de_naissance" required>
                     </div>
 
                     <div class="form-group required">
                         <label for="phone">Téléphone</label>
-                        <input type="tel" id="phone" name="phone" required>
+                        <input type="tel" id="phone" name="Telephone" required>
                     </div>
 
                     <div class="form-group required">
                         <label for="whatsapp">WhatsApp</label>
-                        <input type="tel" id="whatsapp" name="whatsapp" required>
+                        <input type="tel" id="whatsapp" name="WhatsApp" required>
                     </div>
 
                     <div class="form-group required">
                         <label for="email">Adresse e-mail</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="Email" required>
                     </div>
 
                     <div class="form-group required" id="countryResidence-group" style="display:none;">
                         <label for="countryResidence">Pays de résidence actuelle</label>
-                        <input type="text" id="countryResidence" name="countryResidence">
+                        <input type="text" id="countryResidence" name="Pays_de_residence">
                     </div>
 
                     <div class="buttons">
@@ -708,220 +522,122 @@ Veuillez rester joignable par téléphone, WhatsApp ou e-mail.</p>
 
                 <!-- VISA ÉTUDES ESPAGNE -->
                 <div class="form-section" id="section-visa-etudes-espagne" data-program="visa-etudes-espagne">
-                    <div class="section-title">📚 Évaluation du Profil - Visa Études Espagne</div>
+                    <div class="section-title">📚 Visa Études Espagne</div>
 
                     <div class="form-group required">
                         <label>Avez-vous un passeport valide ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="ve-passport-yes" name="ve_passport" value="Oui" required>
-                                <label for="ve-passport-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="ve-passport-no" name="ve_passport" value="Non">
-                                <label for="ve-passport-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Passeport_valide_VE" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Passeport_valide_VE" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Possédez-vous un acte de naissance ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="ve-birth-yes" name="ve_birthCert" value="Oui" required>
-                                <label for="ve-birth-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="ve-birth-no" name="ve_birthCert" value="Non">
-                                <label for="ve-birth-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Acte_de_naissance_VE" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Acte_de_naissance_VE" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Possédez-vous votre Baccalauréat ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="ve-bac-yes" name="ve_bachelor" value="Oui" required>
-                                <label for="ve-bac-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="ve-bac-no" name="ve_bachelor" value="Non">
-                                <label for="ve-bac-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Baccalaureat_VE" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Baccalaureat_VE" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Disposez-vous des relevés de notes du Baccalauréat ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="ve-bacnotes-yes" name="ve_bacNotes" value="Oui" required>
-                                <label for="ve-bacnotes-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="ve-bacnotes-no" name="ve_bacNotes" value="Non">
-                                <label for="ve-bacnotes-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Releves_notes_bac_VE" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Releves_notes_bac_VE" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Disposez-vous de vos bulletins scolaires récents ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="ve-schoolrecords-yes" name="ve_schoolRecords" value="Oui" required>
-                                <label for="ve-schoolrecords-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="ve-schoolrecords-no" name="ve_schoolRecords" value="Non">
-                                <label for="ve-schoolrecords-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Bulletins_scolaires_VE" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Bulletins_scolaires_VE" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Possédez-vous un certificat de résidence ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="ve-residence-yes" name="ve_residenceCert" value="Oui" required>
-                                <label for="ve-residence-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="ve-residence-no" name="ve_residenceCert" value="Non">
-                                <label for="ve-residence-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Certificat_residence_VE" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Certificat_residence_VE" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Pouvez-vous obtenir un casier judiciaire ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="ve-criminal-yes" name="ve_criminalRecord" value="Oui" required>
-                                <label for="ve-criminal-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="ve-criminal-no" name="ve_criminalRecord" value="Non">
-                                <label for="ve-criminal-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Casier_judiciaire_VE" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Casier_judiciaire_VE" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Pouvez-vous obtenir un certificat médical ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="ve-medical-yes" name="ve_medicalCert" value="Oui" required>
-                                <label for="ve-medical-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="ve-medical-no" name="ve_medicalCert" value="Non">
-                                <label for="ve-medical-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Certificat_medical_VE" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Certificat_medical_VE" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Disposez-vous d'un garant financier ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="ve-guarantor-yes" name="ve_hasGuarantor" value="Oui" required onchange="toggleGuarantorSection('ve')">
-                                <label for="ve-guarantor-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="ve-guarantor-no" name="ve_hasGuarantor" value="Non" onchange="toggleGuarantorSection('ve')">
-                                <label for="ve-guarantor-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Garant_financier_VE" value="Oui" required onchange="toggleGuarantor('ve')"><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Garant_financier_VE" value="Non" onchange="toggleGuarantor('ve')"><label>Non</label></div>
                         </div>
                     </div>
 
-                    <div class="conditional-group" id="ve-guarantor-section">
-                        <div class="form-group">
-                            <label>Votre garant possède-t-il :</label>
-                        </div>
-
+                    <div class="conditional-group" id="ve-guarantor">
+                        <div class="form-group"><label>Votre garant possède-t-il :</label></div>
                         <div class="form-group">
                             <label>NIF ?</label>
                             <div class="radio-group">
-                                <div class="radio-item">
-                                    <input type="radio" id="ve-nif-yes" name="ve_guarantorNif" value="Oui">
-                                    <label for="ve-nif-yes">Oui</label>
-                                </div>
-                                <div class="radio-item">
-                                    <input type="radio" id="ve-nif-no" name="ve_guarantorNif" value="Non">
-                                    <label for="ve-nif-no">Non</label>
-                                </div>
+                                <div class="radio-item"><input type="radio" name="Garant_NIF_VE" value="Oui"><label>Oui</label></div>
+                                <div class="radio-item"><input type="radio" name="Garant_NIF_VE" value="Non"><label>Non</label></div>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label>RCCM ?</label>
                             <div class="radio-group">
-                                <div class="radio-item">
-                                    <input type="radio" id="ve-rccm-yes" name="ve_guarantorRccm" value="Oui">
-                                    <label for="ve-rccm-yes">Oui</label>
-                                </div>
-                                <div class="radio-item">
-                                    <input type="radio" id="ve-rccm-no" name="ve_guarantorRccm" value="Non">
-                                    <label for="ve-rccm-no">Non</label>
-                                </div>
+                                <div class="radio-item"><input type="radio" name="Garant_RCCM_VE" value="Oui"><label>Oui</label></div>
+                                <div class="radio-item"><input type="radio" name="Garant_RCCM_VE" value="Non"><label>Non</label></div>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label>ARF ?</label>
                             <div class="radio-group">
-                                <div class="radio-item">
-                                    <input type="radio" id="ve-arf-yes" name="ve_guarantorArf" value="Oui">
-                                    <label for="ve-arf-yes">Oui</label>
-                                </div>
-                                <div class="radio-item">
-                                    <input type="radio" id="ve-arf-no" name="ve_guarantorArf" value="Non">
-                                    <label for="ve-arf-no">Non</label>
-                                </div>
+                                <div class="radio-item"><input type="radio" name="Garant_ARF_VE" value="Oui"><label>Oui</label></div>
+                                <div class="radio-item"><input type="radio" name="Garant_ARF_VE" value="Non"><label>Non</label></div>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label>Relevé bancaire ?</label>
                             <div class="radio-group">
-                                <div class="radio-item">
-                                    <input type="radio" id="ve-bank-yes" name="ve_guarantorBankStatement" value="Oui">
-                                    <label for="ve-bank-yes">Oui</label>
-                                </div>
-                                <div class="radio-item">
-                                    <input type="radio" id="ve-bank-no" name="ve_guarantorBankStatement" value="Non">
-                                    <label for="ve-bank-no">Non</label>
-                                </div>
+                                <div class="radio-item"><input type="radio" name="Garant_Banque_VE" value="Oui"><label>Oui</label></div>
+                                <div class="radio-item"><input type="radio" name="Garant_Banque_VE" value="Non"><label>Non</label></div>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label>Pièce d'identité ?</label>
                             <div class="radio-group">
-                                <div class="radio-item">
-                                    <input type="radio" id="ve-id-yes" name="ve_guarantorId" value="Oui">
-                                    <label for="ve-id-yes">Oui</label>
-                                </div>
-                                <div class="radio-item">
-                                    <input type="radio" id="ve-id-no" name="ve_guarantorId" value="Non">
-                                    <label for="ve-id-no">Non</label>
-                                </div>
+                                <div class="radio-item"><input type="radio" name="Garant_Identite_VE" value="Oui"><label>Oui</label></div>
+                                <div class="radio-item"><input type="radio" name="Garant_Identite_VE" value="Non"><label>Non</label></div>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label>Documents de propriété ?</label>
                             <div class="radio-group">
-                                <div class="radio-item">
-                                    <input type="radio" id="ve-property-yes" name="ve_guarantorProperty" value="Oui">
-                                    <label for="ve-property-yes">Oui</label>
-                                </div>
-                                <div class="radio-item">
-                                    <input type="radio" id="ve-property-no" name="ve_guarantorProperty" value="Non">
-                                    <label for="ve-property-no">Non</label>
-                                </div>
+                                <div class="radio-item"><input type="radio" name="Garant_Propriete_VE" value="Oui"><label>Oui</label></div>
+                                <div class="radio-item"><input type="radio" name="Garant_Propriete_VE" value="Non"><label>Non</label></div>
                             </div>
                         </div>
                     </div>
@@ -929,437 +645,290 @@ Veuillez rester joignable par téléphone, WhatsApp ou e-mail.</p>
                     <div class="form-group required">
                         <label>Quel budget pouvez-vous mobiliser actuellement ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="ve-budget1" name="ve_budget" value="Moins de 1 000 000 FCFA" required>
-                                <label for="ve-budget1">Moins de 1 000 000 FCFA</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="ve-budget2" name="ve_budget" value="Entre 1 000 000 et 2 000 000 FCFA">
-                                <label for="ve-budget2">Entre 1 000 000 et 2 000 000 FCFA</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="ve-budget3" name="ve_budget" value="Entre 2 000 000 et 4 000 000 FCFA">
-                                <label for="ve-budget3">Entre 2 000 000 et 4 000 000 FCFA</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="ve-budget4" name="ve_budget" value="Plus de 4 000 000 FCFA">
-                                <label for="ve-budget4">Plus de 4 000 000 FCFA</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Budget_VE" value="Moins de 1 000 000 FCFA" required><label>Moins de 1 000 000 FCFA</label></div>
+                            <div class="radio-item"><input type="radio" name="Budget_VE" value="Entre 1 000 000 et 2 000 000 FCFA"><label>Entre 1 000 000 et 2 000 000 FCFA</label></div>
+                            <div class="radio-item"><input type="radio" name="Budget_VE" value="Entre 2 000 000 et 4 000 000 FCFA"><label>Entre 2 000 000 et 4 000 000 FCFA</label></div>
+                            <div class="radio-item"><input type="radio" name="Budget_VE" value="Plus de 4 000 000 FCFA"><label>Plus de 4 000 000 FCFA</label></div>
                         </div>
                     </div>
 
                     <div class="buttons">
                         <button type="button" class="btn-secondary" onclick="previousStep()">Retour</button>
-                        <button type="button" class="btn-primary" onclick="nextStep()">Continuer</button>
+                        <button type="submit" class="btn-primary">Soumettre</button>
                     </div>
                 </div>
 
                 <!-- VISA TRAVAIL ESPAGNE -->
                 <div class="form-section" id="section-visa-travail-espagne" data-program="visa-travail-espagne">
-                    <div class="section-title">💼 Évaluation du Profil - Visa Travail Espagne</div>
+                    <div class="section-title">💼 Visa Travail Espagne</div>
 
                     <div class="form-group required">
                         <label for="vte-education">Niveau d'études</label>
-                        <input type="text" id="vte-education" name="vte_education" placeholder="Ex: Licence, Master, Baccalauréat..." required>
+                        <input type="text" id="vte-education" name="Niveau_etudes_VTE" required>
                     </div>
 
                     <div class="form-group required">
                         <label for="vte-profession">Profession actuelle</label>
-                        <input type="text" id="vte-profession" name="vte_profession" required>
+                        <input type="text" id="vte-profession" name="Profession_VTE" required>
                     </div>
 
                     <div class="form-group required">
                         <label for="vte-experience">Années d'expérience professionnelle</label>
-                        <input type="number" id="vte-experience" name="vte_experience" min="0" max="70" required>
+                        <input type="number" id="vte-experience" name="Experience_VTE" min="0" max="70" required>
                     </div>
 
                     <div class="form-group required">
                         <label>Parlez-vous espagnol ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vte-spanish-yes" name="vte_spanish" value="Oui" required>
-                                <label for="vte-spanish-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vte-spanish-no" name="vte_spanish" value="Non">
-                                <label for="vte-spanish-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Espagnol_VTE" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Espagnol_VTE" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Parlez-vous anglais ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vte-english-yes" name="vte_english" value="Oui" required>
-                                <label for="vte-english-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vte-english-no" name="vte_english" value="Non">
-                                <label for="vte-english-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Anglais_VTE" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Anglais_VTE" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Possédez-vous un passeport valide ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vte-passport-yes" name="vte_passport" value="Oui" required>
-                                <label for="vte-passport-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vte-passport-no" name="vte_passport" value="Non">
-                                <label for="vte-passport-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Passeport_VTE" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Passeport_VTE" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Avez-vous déjà travaillé à l'étranger ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vte-abroad-yes" name="vte_abroadWork" value="Oui" required>
-                                <label for="vte-abroad-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vte-abroad-no" name="vte_abroadWork" value="Non">
-                                <label for="vte-abroad-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Travail_etranger_VTE" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Travail_etranger_VTE" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Possédez-vous un CV professionnel ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vte-cv-yes" name="vte_cv" value="Oui" required>
-                                <label for="vte-cv-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vte-cv-no" name="vte_cv" value="Non">
-                                <label for="vte-cv-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="CV_VTE" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="CV_VTE" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Pouvez-vous financer votre procédure ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vte-finance-yes" name="vte_canFinance" value="Oui" required onchange="toggleBudgetSection('vte')">
-                                <label for="vte-finance-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vte-finance-no" name="vte_canFinance" value="Non" onchange="toggleBudgetSection('vte')">
-                                <label for="vte-finance-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Financer_VTE" value="Oui" required onchange="toggleBudget('vte')"><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Financer_VTE" value="Non" onchange="toggleBudget('vte')"><label>Non</label></div>
                         </div>
                     </div>
 
-                    <div class="conditional-group" id="vte-budget-section">
+                    <div class="conditional-group" id="vte-budget">
                         <div class="form-group">
                             <label>Budget disponible :</label>
                             <div class="radio-group">
-                                <div class="radio-item">
-                                    <input type="radio" id="vte-budgetopt1" name="vte_budget" value="Moins de 1 000 000 FCFA">
-                                    <label for="vte-budgetopt1">Moins de 1 000 000 FCFA</label>
-                                </div>
-                                <div class="radio-item">
-                                    <input type="radio" id="vte-budgetopt2" name="vte_budget" value="Entre 1 000 000 et 2 000 000 FCFA">
-                                    <label for="vte-budgetopt2">Entre 1 000 000 et 2 000 000 FCFA</label>
-                                </div>
-                                <div class="radio-item">
-                                    <input type="radio" id="vte-budgetopt3" name="vte_budget" value="Plus de 2 000 000 FCFA">
-                                    <label for="vte-budgetopt3">Plus de 2 000 000 FCFA</label>
-                                </div>
+                                <div class="radio-item"><input type="radio" name="Budget_VTE" value="Moins de 1 000 000 FCFA"><label>Moins de 1 000 000 FCFA</label></div>
+                                <div class="radio-item"><input type="radio" name="Budget_VTE" value="Entre 1 000 000 et 2 000 000 FCFA"><label>Entre 1 000 000 et 2 000 000 FCFA</label></div>
+                                <div class="radio-item"><input type="radio" name="Budget_VTE" value="Plus de 2 000 000 FCFA"><label>Plus de 2 000 000 FCFA</label></div>
                             </div>
                         </div>
                     </div>
 
                     <div class="buttons">
                         <button type="button" class="btn-secondary" onclick="previousStep()">Retour</button>
-                        <button type="button" class="btn-primary" onclick="nextStep()">Continuer</button>
+                        <button type="submit" class="btn-primary">Soumettre</button>
                     </div>
                 </div>
 
                 <!-- VISA VISITEUR CANADA -->
                 <div class="form-section" id="section-visa-visiteur-canada" data-program="visa-visiteur-canada">
-                    <div class="section-title">✈️ Évaluation du Profil - Visa Visiteur Canada</div>
+                    <div class="section-title">✈️ Visa Visiteur Canada</div>
 
                     <div class="form-group required">
                         <label for="vc-profession">Profession actuelle</label>
-                        <input type="text" id="vc-profession" name="vc_profession" required>
+                        <input type="text" id="vc-profession" name="Profession_VC" required>
                     </div>
 
                     <div class="form-group required">
                         <label for="vc-employer">Employeur ou entreprise</label>
-                        <input type="text" id="vc-employer" name="vc_employer" required>
+                        <input type="text" id="vc-employer" name="Employeur_VC" required>
                     </div>
 
                     <div class="form-group required">
                         <label for="vc-income">Revenu mensuel</label>
-                        <input type="number" id="vc-income" name="vc_income" required>
+                        <input type="number" id="vc-income" name="Revenu_VC" required>
                     </div>
 
                     <div class="form-group required">
                         <label>Avez-vous déjà voyagé à l'étranger ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vc-travel-yes" name="vc_hasTraveled" value="Oui" required onchange="toggleTravelInfo('vc')">
-                                <label for="vc-travel-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vc-travel-no" name="vc_hasTraveled" value="Non" onchange="toggleTravelInfo('vc')">
-                                <label for="vc-travel-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Voyages_VC" value="Oui" required onchange="toggleTravel('vc')"><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Voyages_VC" value="Non" onchange="toggleTravel('vc')"><label>Non</label></div>
                         </div>
                     </div>
 
-                    <div class="conditional-group" id="vc-countries-section">
+                    <div class="conditional-group" id="vc-travel">
                         <div class="form-group">
                             <label for="vc-countries">Quels pays avez-vous visités ?</label>
-                            <textarea id="vc-countries" name="vc_countries" placeholder="Ex: France, Italie, Espagne..."></textarea>
+                            <textarea id="vc-countries" name="Pays_visites_VC"></textarea>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Avez-vous déjà obtenu un visa ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vc-hasvisa-yes" name="vc_hasVisa" value="Oui" required>
-                                <label for="vc-hasvisa-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vc-hasvisa-no" name="vc_hasVisa" value="Non">
-                                <label for="vc-hasvisa-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Visa_anterieur_VC" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Visa_anterieur_VC" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Avez-vous déjà reçu un refus de visa ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vc-refusal-yes" name="vc_hasRefusal" value="Oui" required>
-                                <label for="vc-refusal-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vc-refusal-no" name="vc_hasRefusal" value="Non">
-                                <label for="vc-refusal-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Refus_visa_VC" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Refus_visa_VC" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Quel budget pouvez-vous consacrer à votre voyage ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vc-budget1" name="vc_budget" value="Moins de 1 000 000 FCFA" required>
-                                <label for="vc-budget1">Moins de 1 000 000 FCFA</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vc-budget2" name="vc_budget" value="Entre 1 000 000 et 2 500 000 FCFA">
-                                <label for="vc-budget2">Entre 1 000 000 et 2 500 000 FCFA</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vc-budget3" name="vc_budget" value="Entre 2 500 000 et 5 000 000 FCFA">
-                                <label for="vc-budget3">Entre 2 500 000 et 5 000 000 FCFA</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vc-budget4" name="vc_budget" value="Plus de 5 000 000 FCFA">
-                                <label for="vc-budget4">Plus de 5 000 000 FCFA</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Budget_VC" value="Moins de 1 000 000 FCFA" required><label>Moins de 1 000 000 FCFA</label></div>
+                            <div class="radio-item"><input type="radio" name="Budget_VC" value="Entre 1 000 000 et 2 500 000 FCFA"><label>Entre 1 000 000 et 2 500 000 FCFA</label></div>
+                            <div class="radio-item"><input type="radio" name="Budget_VC" value="Entre 2 500 000 et 5 000 000 FCFA"><label>Entre 2 500 000 et 5 000 000 FCFA</label></div>
+                            <div class="radio-item"><input type="radio" name="Budget_VC" value="Plus de 5 000 000 FCFA"><label>Plus de 5 000 000 FCFA</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Possédez-vous un passeport valide ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vc-passport-yes" name="vc_passport" value="Oui" required>
-                                <label for="vc-passport-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vc-passport-no" name="vc_passport" value="Non">
-                                <label for="vc-passport-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Passeport_VC" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Passeport_VC" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Possédez-vous un relevé bancaire ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vc-bank-yes" name="vc_bankStatement" value="Oui" required>
-                                <label for="vc-bank-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vc-bank-no" name="vc_bankStatement" value="Non">
-                                <label for="vc-bank-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Releve_banc_VC" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Releve_banc_VC" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="buttons">
                         <button type="button" class="btn-secondary" onclick="previousStep()">Retour</button>
-                        <button type="button" class="btn-primary" onclick="nextStep()">Continuer</button>
+                        <button type="submit" class="btn-primary">Soumettre</button>
                     </div>
                 </div>
 
                 <!-- VISA TRAVAIL KOWEÏT -->
                 <div class="form-section" id="section-visa-travail-koweit" data-program="visa-travail-koweit">
-                    <div class="section-title">🏢 Évaluation du Profil - Visa Travail Koweït</div>
+                    <div class="section-title">🏢 Visa Travail Koweït</div>
 
                     <div class="form-group required">
                         <label for="vtk-profession">Quel est votre métier actuel ?</label>
-                        <input type="text" id="vtk-profession" name="vtk_profession" required>
+                        <input type="text" id="vtk-profession" name="Metier_VTK" required>
                     </div>
 
                     <div class="form-group required">
                         <label>Parlez-vous anglais ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vtk-english-yes" name="vtk_english" value="Oui" required>
-                                <label for="vtk-english-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vtk-english-no" name="vtk_english" value="Non">
-                                <label for="vtk-english-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Anglais_VTK" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Anglais_VTK" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Parlez-vous arabe ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vtk-arabic-yes" name="vtk_arabic" value="Oui" required>
-                                <label for="vtk-arabic-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vtk-arabic-no" name="vtk_arabic" value="Non">
-                                <label for="vtk-arabic-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Arabe_VTK" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Arabe_VTK" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Possédez-vous un permis de conduire ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vtk-license-yes" name="vtk_license" value="Oui" required>
-                                <label for="vtk-license-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vtk-license-no" name="vtk_license" value="Non">
-                                <label for="vtk-license-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Permis_VTK" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Permis_VTK" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Avez-vous déjà travaillé à l'étranger ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vtk-abroad-yes" name="vtk_abroadWork" value="Oui" required>
-                                <label for="vtk-abroad-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vtk-abroad-no" name="vtk_abroadWork" value="Non">
-                                <label for="vtk-abroad-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Travail_etranger_VTK" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Travail_etranger_VTK" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Avez-vous un passeport valide ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vtk-passport-yes" name="vtk_passport" value="Oui" required>
-                                <label for="vtk-passport-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vtk-passport-no" name="vtk_passport" value="Non">
-                                <label for="vtk-passport-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Passeport_VTK" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Passeport_VTK" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Pouvez-vous mobiliser un budget compris entre 850 000 FCFA et 1 500 000 FCFA ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="vtk-budget-yes" name="vtk_canBudget" value="Oui" required onchange="toggleBudgetAlt('vtk')">
-                                <label for="vtk-budget-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="vtk-budget-no" name="vtk_canBudget" value="Non" onchange="toggleBudgetAlt('vtk')">
-                                <label for="vtk-budget-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Budget_requis_VTK" value="Oui" required onchange="toggleBudgetAlt('vtk')"><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Budget_requis_VTK" value="Non" onchange="toggleBudgetAlt('vtk')"><label>Non</label></div>
                         </div>
                     </div>
 
-                    <div class="conditional-group" id="vtk-budget-section">
+                    <div class="conditional-group" id="vtk-budget">
                         <div class="form-group">
                             <label for="vtk-budget-custom">Quel budget pouvez-vous mobiliser ?</label>
-                            <input type="text" id="vtk-budget-custom" name="vtk_budgetAmount" placeholder="Ex: 1 500 000 FCFA">
+                            <input type="text" id="vtk-budget-custom" name="Budget_mobilisable_VTK">
                         </div>
                     </div>
 
                     <div class="buttons">
                         <button type="button" class="btn-secondary" onclick="previousStep()">Retour</button>
-                        <button type="button" class="btn-primary" onclick="nextStep()">Continuer</button>
+                        <button type="submit" class="btn-primary">Soumettre</button>
                     </div>
                 </div>
 
                 <!-- RÉSIDENCE DUBAÏ -->
                 <div class="form-section" id="section-residence-dubai" data-program="residence-dubai">
-                    <div class="section-title">🏙️ Évaluation du Profil - Résidence Dubaï</div>
+                    <div class="section-title">🏙️ Résidence Dubaï</div>
 
                     <div class="form-group required">
                         <label for="rd-profession">Profession actuelle</label>
-                        <input type="text" id="rd-profession" name="rd_profession" required>
+                        <input type="text" id="rd-profession" name="Profession_RD" required>
                     </div>
 
                     <div class="form-group required">
                         <label>Possédez-vous un passeport valide ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="rd-passport-yes" name="rd_passport" value="Oui" required>
-                                <label for="rd-passport-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="rd-passport-no" name="rd_passport" value="Non">
-                                <label for="rd-passport-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Passeport_RD" value="Oui" required><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Passeport_RD" value="Non"><label>Non</label></div>
                         </div>
                     </div>
 
                     <div class="form-group required">
                         <label>Pouvez-vous mobiliser un budget compris entre 1 500 000 FCFA et 2 000 000 FCFA ?</label>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="rd-budget-yes" name="rd_canBudget" value="Oui" required onchange="toggleBudgetAlt('rd')">
-                                <label for="rd-budget-yes">Oui</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="rd-budget-no" name="rd_canBudget" value="Non" onchange="toggleBudgetAlt('rd')">
-                                <label for="rd-budget-no">Non</label>
-                            </div>
+                            <div class="radio-item"><input type="radio" name="Budget_requis_RD" value="Oui" required onchange="toggleBudgetAlt('rd')"><label>Oui</label></div>
+                            <div class="radio-item"><input type="radio" name="Budget_requis_RD" value="Non" onchange="toggleBudgetAlt('rd')"><label>Non</label></div>
                         </div>
                     </div>
 
-                    <div class="conditional-group" id="rd-budget-section">
+                    <div class="conditional-group" id="rd-budget">
                         <div class="form-group">
                             <label for="rd-budget-custom">Quel budget pouvez-vous mobiliser ?</label>
-                            <input type="text" id="rd-budget-custom" name="rd_budgetAmount" placeholder="Ex: 2 000 000 FCFA">
+                            <input type="text" id="rd-budget-custom" name="Budget_mobilisable_RD">
                         </div>
                     </div>
 
                     <div class="buttons">
                         <button type="button" class="btn-secondary" onclick="previousStep()">Retour</button>
-                        <button type="button" class="btn-primary" onclick="submitForm()">Soumettre</button>
+                        <button type="submit" class="btn-primary">Soumettre</button>
                     </div>
                 </div>
             </form>
@@ -1371,11 +940,22 @@ Veuillez rester joignable par téléphone, WhatsApp ou e-mail.</p>
         let selectedProgram = null;
         const steps = [];
 
+        function getSuccessUrl() {
+            const pathname = window.location.pathname;
+            const parts = pathname.split('/').filter(p => p && p !== 'index.html');
+            
+            if (parts.length > 0) {
+                return window.location.origin + '/' + parts[0] + '/success.html';
+            }
+            return window.location.origin + '/success.html';
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
-            const programCards = document.querySelectorAll('.card');
-            programCards.forEach(card => {
+            document.getElementById('nextUrl').value = getSuccessUrl();
+
+            document.querySelectorAll('.card').forEach(card => {
                 card.addEventListener('click', function() {
-                    programCards.forEach(c => c.classList.remove('selected'));
+                    document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
                     this.classList.add('selected');
                     selectedProgram = this.dataset.program;
                     document.getElementById('selectedProgram').value = selectedProgram;
@@ -1390,7 +970,6 @@ Veuillez rester joignable par téléphone, WhatsApp ou e-mail.</p>
                 return;
             }
 
-            // Show age field for Visa Travail Espagne
             if (selectedProgram === 'visa-travail-espagne') {
                 document.getElementById('age-group').style.display = 'block';
                 document.getElementById('age').required = true;
@@ -1399,7 +978,6 @@ Veuillez rester joignable par téléphone, WhatsApp ou e-mail.</p>
                 document.getElementById('age').required = false;
             }
 
-            // Show country residence for Résidence Dubaï
             if (selectedProgram === 'residence-dubai') {
                 document.getElementById('countryResidence-group').style.display = 'block';
                 document.getElementById('countryResidence').required = true;
@@ -1411,7 +989,6 @@ Veuillez rester joignable par téléphone, WhatsApp ou e-mail.</p>
             steps.length = 0;
             steps.push('section-personal');
             steps.push(`section-${selectedProgram}`);
-
             currentStep = 0;
             showStep(currentStep);
         }
@@ -1442,10 +1019,7 @@ Veuillez rester joignable par téléphone, WhatsApp ou e-mail.</p>
         }
 
         function nextStep() {
-            if (!validateCurrentStep()) {
-                return;
-            }
-
+            if (!validateCurrentStep()) return;
             if (currentStep < steps.length - 1) {
                 currentStep++;
                 showStep(currentStep);
@@ -1466,8 +1040,7 @@ Veuillez rester joignable par téléphone, WhatsApp ou e-mail.</p>
 
             for (let field of requiredFields) {
                 if (field.type === 'radio' || field.type === 'checkbox') {
-                    const fieldName = field.name;
-                    const isChecked = section.querySelector(`[name="${fieldName}"]:checked`);
+                    const isChecked = section.querySelector(`[name="${field.name}"]:checked`);
                     if (!isChecked) {
                         showError('Veuillez remplir tous les champs obligatoires');
                         return false;
@@ -1490,20 +1063,20 @@ Veuillez rester joignable par téléphone, WhatsApp ou e-mail.</p>
             }
         }
 
-        function toggleGuarantorSection(prefix) {
-            const hasGuarantor = document.querySelector(`input[name="${prefix}_hasGuarantor"]:checked`);
-            const section = document.getElementById(`${prefix}-guarantor-section`);
-            if (hasGuarantor && hasGuarantor.value === 'Oui') {
+        function toggleGuarantor(prefix) {
+            const checked = document.querySelector(`input[name="Garant_financier_${prefix.toUpperCase()}"]:checked`);
+            const section = document.getElementById(`${prefix}-guarantor`);
+            if (checked && checked.value === 'Oui') {
                 section.classList.add('visible');
             } else {
                 section.classList.remove('visible');
             }
         }
 
-        function toggleBudgetSection(prefix) {
-            const canFinance = document.querySelector(`input[name="${prefix}_canFinance"]:checked`);
-            const section = document.getElementById(`${prefix}-budget-section`);
-            if (canFinance && canFinance.value === 'Oui') {
+        function toggleBudget(prefix) {
+            const checked = document.querySelector(`input[name="Financer_${prefix.toUpperCase()}"]:checked`);
+            const section = document.getElementById(`${prefix}-budget`);
+            if (checked && checked.value === 'Oui') {
                 section.classList.add('visible');
             } else {
                 section.classList.remove('visible');
@@ -1511,19 +1084,23 @@ Veuillez rester joignable par téléphone, WhatsApp ou e-mail.</p>
         }
 
         function toggleBudgetAlt(prefix) {
-            const hasBudget = document.querySelector(`input[name="${prefix}_canBudget"]:checked`);
-            const section = document.getElementById(`${prefix}-budget-section`);
-            if (hasBudget && hasBudget.value === 'Non') {
+            let fieldName;
+            if (prefix === 'vtk') fieldName = 'Budget_requis_VTK';
+            else if (prefix === 'rd') fieldName = 'Budget_requis_RD';
+            
+            const checked = document.querySelector(`input[name="${fieldName}"]:checked`);
+            const section = document.getElementById(`${prefix}-budget`);
+            if (checked && checked.value === 'Non') {
                 section.classList.add('visible');
             } else {
                 section.classList.remove('visible');
             }
         }
 
-        function toggleTravelInfo(prefix) {
-            const hasTraveled = document.querySelector(`input[name="${prefix}_hasTraveled"]:checked`);
-            const section = document.getElementById(`${prefix}-countries-section`);
-            if (hasTraveled && hasTraveled.value === 'Oui') {
+        function toggleTravel(prefix) {
+            const checked = document.querySelector(`input[name="Voyages_${prefix.toUpperCase()}"]:checked`);
+            const section = document.getElementById(`${prefix}-travel`);
+            if (checked && checked.value === 'Oui') {
                 section.classList.add('visible');
             } else {
                 section.classList.remove('visible');
@@ -1538,26 +1115,7 @@ Veuillez rester joignable par téléphone, WhatsApp ou e-mail.</p>
         }
 
         function clearError() {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.classList.remove('show');
-        }
-
-        function submitForm() {
-            if (!validateCurrentStep()) {
-                return;
-            }
-
-            const form = document.getElementById('assessmentForm');
-            
-            // Show success message
-            document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
-            document.getElementById('successContainer').classList.add('show');
-            document.getElementById('progressContainer').style.display = 'none';
-            
-            // Submit form to FormSubmit after showing success
-            setTimeout(() => {
-                form.submit();
-            }, 1000);
+            document.getElementById('errorMessage').classList.remove('show');
         }
     </script>
 </body>
