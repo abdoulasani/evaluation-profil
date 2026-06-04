@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizon Atlas - Confirmation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f3460 0%, #1a5490 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-container {
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .success-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: slideUp 0.6s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f3460 0%, #1a5490 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 5em;
+            margin-bottom: 25px;
+            animation: pulse 0.8s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .success-title {
+            font-size: 2em;
+            color: #0f3460;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .success-message {
+            font-size: 1.05em;
+            color: #555;
+            line-height: 1.9;
+            margin-bottom: 30px;
+            white-space: pre-line;
+        }
+
+        .footer-text {
+            font-size: 0.95em;
+            color: #0f3460;
+            font-weight: 600;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        button, a.btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0f3460 0%, #1a5490 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(26, 84, 144, 0.3);
+        }
+
+        .btn-secondary {
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .info-card {
+            background: #f8f9ff;
+            border: 2px solid #1a5490;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .info-title {
+            color: #0f3460;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .info-item {
+            color: #555;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .info-item strong {
+            color: #0f3460;
+        }
+
+        .whatsapp-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 35px 25px;
+            }
+
+            .success-title {
+                font-size: 1.5em;
+            }
+
+            .success-icon {
+                font-size: 3.5em;
+            }
+
+            .success-message {
+                font-size: 0.95em;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            button, a.btn {
+                width: 100%;
+                padding: 12px 20px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="success-card">
+            <div class="header">
+                <h1>🌍 Horizon Atlas</h1>
+            </div>
+
+            <div class="content">
+                <div class="success-icon">✅</div>
+                <h2 class="success-title">Merci pour votre confiance</h2>
+                
+                <p class="success-message">Votre demande a été reçue avec succès par Horizon Atlas.
+
+Nos conseillers vont analyser votre profil et vous contacter prochainement afin de vous accompagner dans votre projet d'immigration, d'études, de travail ou de résidence à l'étranger.
+
+Veuillez rester joignable par téléphone, WhatsApp et e-mail.
+
+L'équipe Horizon Atlas vous remercie pour sa confiance.</p>
+
+                <div class="info-card">
+                    <div class="info-title">⏱️ Délai de traitement</div>
+                    <div class="info-item">
+                        <strong>Prochaines étapes :</strong> Nos conseillers examineront votre profil dans un délai de <strong>24 à 48 heures</strong>.
+                    </div>
+                    <div class="info-item">
+                        <strong>Contact :</strong> Vous serez contacté par téléphone, WhatsApp ou email selon les informations fournies.
+                    </div>
+                    <div class="info-item">
+                        <strong>Questions ?</strong> Consultez notre site ou contactez-nous directement.
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <a href="https://wa.me/221761234567?text=Bonjour%20Horizon%20Atlas%2C%20j'ai%20soumis%20une%20évaluation%20d'immigration." class="btn btn-secondary" target="_blank">
+                        💬 Nous contacter via WhatsApp
+                    </a>
+                    <button type="button" class="btn-primary" onclick="window.location.href='./index.html'">
+                        🏠 Retour à l'accueil
+                    </button>
+                </div>
+
+                <div class="footer-text">
+                    À très bientôt,<br>L'équipe Horizon Atlas
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add animation on page load
+        window.addEventListener('load', function() {
+            const card = document.querySelector('.success-card');
+            card.style.animation = 'slideUp 0.6s ease forwards';
+        });
+
+        // Update WhatsApp number if needed
+        document.addEventListener('DOMContentLoaded', function() {
+            // You can customize the WhatsApp number here
+            // Replace '221761234567' with the actual Horizon Atlas WhatsApp number
+            const whatsappLink = document.querySelector('[href*="wa.me"]');
+            if (whatsappLink) {
+                // Keep the current number or update it
+                // whatsappLink.href = 'https://wa.me/YOUR_NUMBER';
+            }
+        });
+    </script>
+</body>
+</html>
